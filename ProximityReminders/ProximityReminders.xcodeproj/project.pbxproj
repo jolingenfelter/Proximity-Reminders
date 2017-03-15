@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9E6CE3B61E79ED910086F30E /* RemindersFetchedResultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E6CE3B51E79ED910086F30E /* RemindersFetchedResultsController.swift */; };
 		9E82A7A11E7752600050EAC5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E82A7A01E7752600050EAC5 /* AppDelegate.swift */; };
 		9E82A7A31E7752600050EAC5 /* RemindersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E82A7A21E7752600050EAC5 /* RemindersViewController.swift */; };
 		9E82A7A81E7752600050EAC5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9E82A7A71E7752600050EAC5 /* Assets.xcassets */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9E6CE3B51E79ED910086F30E /* RemindersFetchedResultsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemindersFetchedResultsController.swift; sourceTree = "<group>"; };
 		9E82A79D1E7752600050EAC5 /* ProximityReminders.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProximityReminders.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E82A7A01E7752600050EAC5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9E82A7A21E7752600050EAC5 /* RemindersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemindersViewController.swift; sourceTree = "<group>"; };
@@ -45,6 +47,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9E6CE3B41E79ED040086F30E /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Helpers;
+			sourceTree = "<group>";
+		};
 		9E82A7941E7752600050EAC5 = {
 			isa = PBXGroup;
 			children = (
@@ -65,9 +74,9 @@
 			isa = PBXGroup;
 			children = (
 				9E82A7A01E7752600050EAC5 /* AppDelegate.swift */,
-				9E82A7A21E7752600050EAC5 /* RemindersViewController.swift */,
 				9EF581101E78B0E7006E2B76 /* Model */,
 				9EF5810F1E78B0CA006E2B76 /* Controllers */,
+				9E6CE3B41E79ED040086F30E /* Helpers */,
 				9E82A7A71E7752600050EAC5 /* Assets.xcassets */,
 				9E82A7A91E7752600050EAC5 /* LaunchScreen.storyboard */,
 				9E82A7AC1E7752600050EAC5 /* Info.plist */,
@@ -79,6 +88,8 @@
 			isa = PBXGroup;
 			children = (
 				9EF5810D1E78AD89006E2B76 /* CoreDataStack.swift */,
+				9E82A7A21E7752600050EAC5 /* RemindersViewController.swift */,
+				9E6CE3B51E79ED910086F30E /* RemindersFetchedResultsController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -167,6 +178,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9E6CE3B61E79ED910086F30E /* RemindersFetchedResultsController.swift in Sources */,
 				9EF5810E1E78AD89006E2B76 /* CoreDataStack.swift in Sources */,
 				9EF581131E78B105006E2B76 /* ProximityReminders.xcdatamodeld in Sources */,
 				9E82A7A31E7752600050EAC5 /* RemindersViewController.swift in Sources */,
