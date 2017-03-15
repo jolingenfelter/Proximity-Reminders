@@ -12,6 +12,11 @@
 		9E82A7A81E7752600050EAC5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9E82A7A71E7752600050EAC5 /* Assets.xcassets */; };
 		9E82A7AB1E7752600050EAC5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9E82A7A91E7752600050EAC5 /* LaunchScreen.storyboard */; };
 		9EF5810E1E78AD89006E2B76 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF5810D1E78AD89006E2B76 /* CoreDataStack.swift */; };
+		9EF581131E78B105006E2B76 /* ProximityReminders.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9EF581111E78B105006E2B76 /* ProximityReminders.xcdatamodeld */; };
+		9EF581301E78C0DB006E2B76 /* Location+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF5812C1E78C0DB006E2B76 /* Location+CoreDataClass.swift */; };
+		9EF581311E78C0DB006E2B76 /* Location+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF5812D1E78C0DB006E2B76 /* Location+CoreDataProperties.swift */; };
+		9EF581321E78C0DB006E2B76 /* Reminder+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF5812E1E78C0DB006E2B76 /* Reminder+CoreDataClass.swift */; };
+		9EF581331E78C0DB006E2B76 /* Reminder+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF5812F1E78C0DB006E2B76 /* Reminder+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +27,11 @@
 		9E82A7AA1E7752600050EAC5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9E82A7AC1E7752600050EAC5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9EF5810D1E78AD89006E2B76 /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
+		9EF581121E78B105006E2B76 /* ProximityReminders.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ProximityReminders.xcdatamodel; sourceTree = "<group>"; };
+		9EF5812C1E78C0DB006E2B76 /* Location+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Location+CoreDataClass.swift"; sourceTree = "<group>"; };
+		9EF5812D1E78C0DB006E2B76 /* Location+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Location+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		9EF5812E1E78C0DB006E2B76 /* Reminder+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Reminder+CoreDataClass.swift"; sourceTree = "<group>"; };
+		9EF5812F1E78C0DB006E2B76 /* Reminder+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Reminder+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,6 +48,10 @@
 		9E82A7941E7752600050EAC5 = {
 			isa = PBXGroup;
 			children = (
+				9EF5812C1E78C0DB006E2B76 /* Location+CoreDataClass.swift */,
+				9EF5812D1E78C0DB006E2B76 /* Location+CoreDataProperties.swift */,
+				9EF5812E1E78C0DB006E2B76 /* Reminder+CoreDataClass.swift */,
+				9EF5812F1E78C0DB006E2B76 /* Reminder+CoreDataProperties.swift */,
 				9E82A79F1E7752600050EAC5 /* ProximityReminders */,
 				9E82A79E1E7752600050EAC5 /* Products */,
 			);
@@ -56,12 +70,29 @@
 			children = (
 				9E82A7A01E7752600050EAC5 /* AppDelegate.swift */,
 				9E82A7A21E7752600050EAC5 /* RemindersViewController.swift */,
-				9EF5810D1E78AD89006E2B76 /* CoreDataStack.swift */,
+				9EF581101E78B0E7006E2B76 /* Model */,
+				9EF5810F1E78B0CA006E2B76 /* Controllers */,
 				9E82A7A71E7752600050EAC5 /* Assets.xcassets */,
 				9E82A7A91E7752600050EAC5 /* LaunchScreen.storyboard */,
 				9E82A7AC1E7752600050EAC5 /* Info.plist */,
 			);
 			path = ProximityReminders;
+			sourceTree = "<group>";
+		};
+		9EF5810F1E78B0CA006E2B76 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				9EF5810D1E78AD89006E2B76 /* CoreDataStack.swift */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		9EF581101E78B0E7006E2B76 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				9EF581111E78B105006E2B76 /* ProximityReminders.xcdatamodeld */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,7 +168,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				9EF5810E1E78AD89006E2B76 /* CoreDataStack.swift in Sources */,
+				9EF581131E78B105006E2B76 /* ProximityReminders.xcdatamodeld in Sources */,
 				9E82A7A31E7752600050EAC5 /* RemindersViewController.swift in Sources */,
+				9EF581331E78C0DB006E2B76 /* Reminder+CoreDataProperties.swift in Sources */,
+				9EF581321E78C0DB006E2B76 /* Reminder+CoreDataClass.swift in Sources */,
+				9EF581311E78C0DB006E2B76 /* Location+CoreDataProperties.swift in Sources */,
+				9EF581301E78C0DB006E2B76 /* Location+CoreDataClass.swift in Sources */,
 				9E82A7A11E7752600050EAC5 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -295,6 +331,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		9EF581111E78B105006E2B76 /* ProximityReminders.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				9EF581121E78B105006E2B76 /* ProximityReminders.xcdatamodel */,
+			);
+			currentVersion = 9EF581121E78B105006E2B76 /* ProximityReminders.xcdatamodel */;
+			path = ProximityReminders.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 9E82A7951E7752600050EAC5 /* Project object */;
 }
