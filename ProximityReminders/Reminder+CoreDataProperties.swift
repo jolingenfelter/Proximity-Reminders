@@ -14,11 +14,14 @@ extension Reminder {
     
     static let entityName = "\(Reminder.self)"
     
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<Reminder> {
-        let request = NSFetchRequest<Reminder>(entityName: Reminder.entityName)
+    @nonobjc static var remindersFetchRequest: NSFetchRequest<NSFetchRequestResult> = {
+        
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: Reminder.entityName)
         request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: true)]
         return request;
-    }
+        
+    }()
+    
     
     class func reminder(withText text: String) -> Reminder {
         

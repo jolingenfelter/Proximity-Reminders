@@ -10,13 +10,13 @@ import Foundation
 import UIKit
 import CoreData
 
-class ReminderDataSource: NSObject {
+class RemindersDataSource: NSObject {
     
     let tableView: UITableView
     private let managedObjectContext = CoreDataStack.sharedInstance.managedObjectContext
     let fetchedResultsController: RemindersFetchedResultsController
     
-    init(fetchRequest: NSFetchRequest<NSFetchRequestResult>, fetchedResultsController: RemindersFetchedResultsController, tableView: UITableView) {
+    init(fetchRequest: NSFetchRequest<NSFetchRequestResult>, tableView: UITableView) {
         
         self.tableView = tableView
         
@@ -32,7 +32,7 @@ class ReminderDataSource: NSObject {
 
 // MARK: - UITableViewDataSource
 
-extension ReminderDataSource: UITableViewDataSource {
+extension RemindersDataSource: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -44,7 +44,7 @@ extension ReminderDataSource: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "")
+        let cell = tableView.dequeueReusableCell(withIdentifier: ReminderCell.reuseIdentifier)
     
         return cell!
     }

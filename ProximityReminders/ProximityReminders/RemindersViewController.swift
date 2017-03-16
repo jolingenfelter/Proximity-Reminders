@@ -9,17 +9,59 @@
 import UIKit
 
 class RemindersViewController: UIViewController {
+    
+    lazy var tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.delegate = self
+        tableView.register(ReminderCell.self, forCellReuseIdentifier: ReminderCell.reuseIdentifier)
+        
+        return tableView
+    }()
+    
+    lazy var dataSource: RemindersDataSource = {
+        
+        let reminderDataSource = RemindersDataSource(fetchRequest: Reminder.remindersFetchRequest, tableView: self.tableView)
+        
+        return reminderDataSource
+        
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        tableView.dataSource = dataSource
+        self.title = "Proximity Reminders"
+        
+    }
+    
+    override func viewDidLayoutSubviews() {
+        
+        // Layout tableView
+        
+        view.addSubview(tableView)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: view.topAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            tableView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            tableView.rightAnchor.constraint(equalTo: view.rightAnchor)])
+        
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
-
 
 }
 
+// MARK : - UITableViewControllerDelegate
+
+extension RemindersViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+    }
+
+}
+
+// MARK: - Navigation

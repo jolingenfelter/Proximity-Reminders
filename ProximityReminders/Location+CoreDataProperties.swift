@@ -13,9 +13,9 @@ extension Location {
     
     static let entityName = "\(Location.self)"
     
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<Location> {
-        return NSFetchRequest<Location>(entityName: "Location");
-    }
+    @nonobjc static var locationFetchRequest: NSFetchRequest<NSFetchRequestResult> = {
+        return NSFetchRequest<NSFetchRequestResult>(entityName: "Location");
+    }()
     
     class func location(withLatitude latitude: Double, longitude: Double) -> Location {
         
