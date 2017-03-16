@@ -28,6 +28,7 @@ class RemindersViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationBarSetup()
         tableView.dataSource = dataSource
         self.title = "Proximity Reminders"
         
@@ -65,3 +66,38 @@ extension RemindersViewController: UITableViewDelegate {
 }
 
 // MARK: - Navigation
+
+extension RemindersViewController {
+    
+    func navigationBarSetup() {
+        
+        let addReminderButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(newReminderPressed))
+        addReminderButton.tintColor = .white
+        navigationItem.rightBarButtonItem = addReminderButton
+        
+    }
+    
+    func newReminderPressed() {
+        
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
