@@ -21,6 +21,8 @@ class RemindersFetchedResultsController: NSFetchedResultsController<NSFetchReque
         
         self.delegate = self
         
+        executeFetch()
+        
     }
     
     func executeFetch() {
