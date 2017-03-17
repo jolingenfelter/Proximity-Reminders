@@ -49,7 +49,10 @@ extension RemindersDataSource: UITableViewDataSource {
         let reminder = fetchedResultsController.object(at: indexPath) as! Reminder
         
         cell.configureCell(forReminder: reminder)
-    
+        
+        cell.completedButton.addTarget(self, action: #selector(toggleCompletedButton(sender:)), for: .touchUpInside)
+        cell.completedButton.tag = indexPath.row
+        
         return cell
     }
     
@@ -62,3 +65,20 @@ extension RemindersDataSource: UITableViewDataSource {
     }
     
 }
+
+// MARK: - Mark Reminder Completed
+
+extension RemindersDataSource {
+    
+    func toggleCompletedButton(sender: UIButton) {
+        
+        let buttonPosition = sender.convert(CGPoint.zero, to: self.tableView)
+        let indexPath = self.tableView.indexPathForRow(at: buttonPosition)
+        let reminder = fetchedResultsController.object(at: indexPath!)
+        
+        print(indexPath?.row)
+        
+    }
+}
+
+

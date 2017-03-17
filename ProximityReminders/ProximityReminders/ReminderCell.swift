@@ -21,6 +21,7 @@ class ReminderCell: UITableViewCell {
     
     let completedButton: UIButton = {
         let button = UIButton()
+        button.backgroundColor = UIColor.blue
         button.imageView?.contentMode = .scaleAspectFit
         return button
     }()
