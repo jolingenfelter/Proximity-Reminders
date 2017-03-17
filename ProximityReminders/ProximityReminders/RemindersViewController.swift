@@ -32,9 +32,6 @@ class RemindersViewController: UIViewController {
         tableView.dataSource = dataSource
         self.title = "Proximity Reminders"
         
-        let reminder = Reminder.reminder(withText: "hello world")
-        CoreDataStack.sharedInstance.saveContext()
-        
     }
     
     override func viewDidLayoutSubviews() {

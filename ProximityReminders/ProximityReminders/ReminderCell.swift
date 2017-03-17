@@ -21,7 +21,6 @@ class ReminderCell: UITableViewCell {
     
     let completedButton: UIButton = {
         let button = UIButton()
-        button.imageView?.image = UIImage(named: "selected")
         button.imageView?.contentMode = .scaleAspectFit
         return button
     }()
@@ -43,7 +42,7 @@ class ReminderCell: UITableViewCell {
         NSLayoutConstraint.activate([
             completedButton.topAnchor.constraint(equalTo: contentView.topAnchor),
             completedButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            completedButton.rightAnchor.constraint(equalTo: contentView.rightAnchor),
+            completedButton.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -5),
             completedButton.widthAnchor.constraint(equalToConstant: 40)
             ])
         
@@ -58,6 +57,12 @@ class ReminderCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
         
         // Configure the view for the selected state
+    }
+    
+    func configureCell(forReminder reminder: Reminder) {
+        
+        reminderTextLabel.text = reminder.text
+        
     }
 
 }

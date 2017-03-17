@@ -44,9 +44,13 @@ extension RemindersDataSource: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: ReminderCell.reuseIdentifier)
+        let cell = tableView.dequeueReusableCell(withIdentifier: ReminderCell.reuseIdentifier) as! ReminderCell
+        
+        let reminder = fetchedResultsController.object(at: indexPath) as! Reminder
+        
+        cell.configureCell(forReminder: reminder)
     
-        return cell!
+        return cell
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
