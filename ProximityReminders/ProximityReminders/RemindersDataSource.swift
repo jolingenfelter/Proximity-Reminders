@@ -80,14 +80,11 @@ extension RemindersDataSource {
         
         
         let reminder = fetchedResultsController.object(at: indexPath) as! Reminder
-        let cell = tableView.cellForRow(at: indexPath) as! ReminderCell
         
         if reminder.completed == false {
             reminder.completed = true
-            cell.completedButton.setImage(UIImage(named: "check"), for: .normal)
         } else {
             reminder.completed = false
-            cell.completedButton.setImage(UIImage(named: "uncheck"), for: .normal)
         }
         
         CoreDataStack.sharedInstance.saveContext()

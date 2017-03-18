@@ -70,8 +70,10 @@ extension RemindersViewController: UITableViewDelegate {
         
         if reminder.completed == true {
             cell.completedButton.setImage(UIImage(named: "check"), for: .normal)
+            cell.reminderTextLabel.textColor = .black
         } else {
             cell.completedButton.setImage(UIImage(named: "uncheck"), for: .normal)
+            cell.reminderTextLabel.textColor = .lightGray
         }
         
     }
