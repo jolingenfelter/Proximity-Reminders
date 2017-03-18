@@ -61,19 +61,34 @@ extension RemindersViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
+        let reminder = dataSource.fetchedResultsController.object(at: indexPath) as! Reminder
+        
+        if reminder.completed == false {
+            print("not complete!")
+        }
+        
+        
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         
         let reminder = dataSource.fetchedResultsController.object(at: indexPath) as! Reminder
         let cell = cell as! ReminderCell
+        cell.selectionStyle = .none
         
         if reminder.completed == true {
             cell.completedButton.setImage(UIImage(named: "check"), for: .normal)
-            cell.reminderTextLabel.textColor = .black
+            cell.reminderTextLabel.textColor = .lightGray
+            
+            if let reminder = reminder.text {
+                let attributedText = NSMutableAttributedString(string: reminder)
+                attributedText.addAttribute(NSStrikethroughStyleAttributeName, value: 2, range: NSRange(location: 0, length: attributedText.length))
+                cell.reminderTextLabel.attributedText = attributedText
+            }
+            
         } else {
             cell.completedButton.setImage(UIImage(named: "uncheck"), for: .normal)
-            cell.reminderTextLabel.textColor = .lightGray
+            cell.reminderTextLabel.textColor = .black
         }
         
     }

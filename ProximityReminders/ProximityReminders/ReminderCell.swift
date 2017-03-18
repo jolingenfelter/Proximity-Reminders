@@ -63,7 +63,6 @@ class ReminderCell: UITableViewCell {
         
         reminderTextLabel.text = reminder.text
         
-        
     }
 
 }
