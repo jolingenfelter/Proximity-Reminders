@@ -52,6 +52,8 @@ class ReminderDetailViewController: UITableViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         
+        self.tableView = UITableView(frame: self.tableView.frame, style: .grouped)
+        
         setupView(forReminder: reminder)
 
     }
