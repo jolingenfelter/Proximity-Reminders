@@ -62,6 +62,19 @@ extension RemindersViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
     }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        
+        let reminder = dataSource.fetchedResultsController.object(at: indexPath) as! Reminder
+        let cell = cell as! ReminderCell
+        
+        if reminder.completed == true {
+            cell.completedButton.setImage(UIImage(named: "check"), for: .normal)
+        } else {
+            cell.completedButton.setImage(UIImage(named: "uncheck"), for: .normal)
+        }
+        
+    }
 
 }
 
