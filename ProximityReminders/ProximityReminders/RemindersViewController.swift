@@ -109,6 +109,11 @@ extension RemindersViewController {
     
     func newReminderPressed() {
         
+        let reminderDetailViewController = ReminderDetailViewController()
+        let navigationController = UINavigationController(rootViewController: reminderDetailViewController)
+        
+        self.present(navigationController, animated: true, completion: nil)
+        
     }
 }
 

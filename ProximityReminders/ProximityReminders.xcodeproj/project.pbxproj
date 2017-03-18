@@ -103,8 +103,8 @@
 			isa = PBXGroup;
 			children = (
 				9EF5810D1E78AD89006E2B76 /* CoreDataStack.swift */,
-				9E82A7A21E7752600050EAC5 /* RemindersViewController.swift */,
 				9E6CE3B51E79ED910086F30E /* RemindersFetchedResultsController.swift */,
+				9E82A7A21E7752600050EAC5 /* RemindersViewController.swift */,
 				9EDF75821E7D67F9002CC3AB /* ReminderDetailViewController.swift */,
 			);
 			name = Controllers;
