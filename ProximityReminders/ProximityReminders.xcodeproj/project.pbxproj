@@ -14,6 +14,7 @@
 		9E82A7A81E7752600050EAC5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9E82A7A71E7752600050EAC5 /* Assets.xcassets */; };
 		9E82A7AB1E7752600050EAC5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9E82A7A91E7752600050EAC5 /* LaunchScreen.storyboard */; };
 		9E90098D1E7B41340086D672 /* ReminderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E90098C1E7B41340086D672 /* ReminderCell.swift */; };
+		9EDF75831E7D67F9002CC3AB /* ReminderDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EDF75821E7D67F9002CC3AB /* ReminderDetailViewController.swift */; };
 		9EF5810E1E78AD89006E2B76 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF5810D1E78AD89006E2B76 /* CoreDataStack.swift */; };
 		9EF581131E78B105006E2B76 /* ProximityReminders.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9EF581111E78B105006E2B76 /* ProximityReminders.xcdatamodeld */; };
 		9EF581301E78C0DB006E2B76 /* Location+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF5812C1E78C0DB006E2B76 /* Location+CoreDataClass.swift */; };
@@ -32,6 +33,7 @@
 		9E82A7AA1E7752600050EAC5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9E82A7AC1E7752600050EAC5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9E90098C1E7B41340086D672 /* ReminderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderCell.swift; sourceTree = "<group>"; };
+		9EDF75821E7D67F9002CC3AB /* ReminderDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderDetailViewController.swift; sourceTree = "<group>"; };
 		9EF5810D1E78AD89006E2B76 /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		9EF581121E78B105006E2B76 /* ProximityReminders.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ProximityReminders.xcdatamodel; sourceTree = "<group>"; };
 		9EF5812C1E78C0DB006E2B76 /* Location+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Location+CoreDataClass.swift"; path = "../Location+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -103,6 +105,7 @@
 				9EF5810D1E78AD89006E2B76 /* CoreDataStack.swift */,
 				9E82A7A21E7752600050EAC5 /* RemindersViewController.swift */,
 				9E6CE3B51E79ED910086F30E /* RemindersFetchedResultsController.swift */,
+				9EDF75821E7D67F9002CC3AB /* ReminderDetailViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -201,6 +204,7 @@
 				9EF581331E78C0DB006E2B76 /* Reminder+CoreDataProperties.swift in Sources */,
 				9EF581321E78C0DB006E2B76 /* Reminder+CoreDataClass.swift in Sources */,
 				9EF581311E78C0DB006E2B76 /* Location+CoreDataProperties.swift in Sources */,
+				9EDF75831E7D67F9002CC3AB /* ReminderDetailViewController.swift in Sources */,
 				9EF581301E78C0DB006E2B76 /* Location+CoreDataClass.swift in Sources */,
 				9E82A7A11E7752600050EAC5 /* AppDelegate.swift in Sources */,
 			);
