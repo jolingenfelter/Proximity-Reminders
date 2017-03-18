@@ -73,10 +73,24 @@ extension RemindersDataSource {
     func toggleCompletedButton(sender: UIButton) {
         
         let buttonPosition = sender.convert(CGPoint.zero, to: self.tableView)
-        let indexPath = self.tableView.indexPathForRow(at: buttonPosition)
-        let reminder = fetchedResultsController.object(at: indexPath!)
         
-        print(indexPath?.row)
+        guard let indexPath = self.tableView.indexPathForRow(at: buttonPosition) else {
+            return
+        }
+        
+        
+        let reminder = fetchedResultsController.object(at: indexPath) as! Reminder
+        let cell = tableView.cellForRow(at: indexPath) as! ReminderCell
+        
+        if reminder.completed == false {
+            reminder.completed = true
+            cell.completedButton.setImage(UIImage(named: "check"), for: .normal)
+        } else {
+            reminder.completed = false
+            cell.completedButton.setImage(UIImage(named: "uncheck"), for: .normal)
+        }
+        
+        CoreDataStack.sharedInstance.saveContext()
         
     }
 }

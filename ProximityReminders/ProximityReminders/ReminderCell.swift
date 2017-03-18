@@ -21,8 +21,7 @@ class ReminderCell: UITableViewCell {
     
     let completedButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = UIColor.blue
-        button.imageView?.contentMode = .scaleAspectFit
+        button.imageView?.contentMode = .center
         return button
     }()
     
@@ -33,7 +32,7 @@ class ReminderCell: UITableViewCell {
         
         NSLayoutConstraint.activate([
             reminderTextLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            reminderTextLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
+            reminderTextLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 5),
             reminderTextLabel.widthAnchor.constraint(equalToConstant: 250)
             ])
         
@@ -63,6 +62,7 @@ class ReminderCell: UITableViewCell {
     func configureCell(forReminder reminder: Reminder) {
         
         reminderTextLabel.text = reminder.text
+        
         
     }
 
