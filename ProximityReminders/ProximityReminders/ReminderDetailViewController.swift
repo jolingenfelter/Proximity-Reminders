@@ -303,7 +303,7 @@ extension ReminderDetailViewController: UITextFieldDelegate {
     
 }
 
-// MARK: - Gestures
+// MARK: - Gestures & UIGestureRecognizerDelegate
 
 extension ReminderDetailViewController: UIGestureRecognizerDelegate {
     
