@@ -56,10 +56,12 @@ class ReminderDetailViewController: UITableViewController {
     }()
     
     let locationDetailCell = UITableViewCell()
+    var reminderLocation: CLLocation?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        navigationBarSetup()
         
         setupView(forReminder: reminder)
 
@@ -72,26 +74,54 @@ class ReminderDetailViewController: UITableViewController {
     
     func setupView(forReminder reminder: Reminder?) {
         
-        if reminder == nil {
-            self.title = "New Reminder"
-        } else {
+        if let reminder = reminder {
+            
             self.title = "Details"
-        }
-        
-        if reminder?.location == nil {
             
-            locationReminderSwitch.isOn = false
-            locationDetailCell.isHidden = true
+            if let location = reminder.location {
+                
+                locationReminderSwitch.isOn = true
+                locationDetailCell.isHidden = false
+                
+            } else {
+                
+                locationReminderSwitch.isOn = false
+                locationDetailCell.isHidden = true
+                
+            }
             
         } else {
             
-            locationReminderSwitch.isOn = true
-            locationDetailCell.isHidden = false
+            self.title = "New Reminder"
             
         }
         
     }
 
+}
+
+// MARK: - Navigation
+
+extension ReminderDetailViewController {
+    
+    func navigationBarSetup() {
+        
+        let saveButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(savePressed))
+        self.navigationItem.rightBarButtonItem = saveButton
+        
+        let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelPressed))
+        self.navigationItem.leftBarButtonItem = cancelButton
+        
+    }
+    
+    func savePressed() {
+        
+    }
+    
+    func cancelPressed() {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
 }
 
 // MARK: - UITableViewDataSource Methods
@@ -223,6 +253,9 @@ extension ReminderDetailViewController {
         if sender.isOn {
             sender.setOn(false, animated: true)
             locationDetailCell.isHidden = true
+            
+            reminderLocation = nil
+            
         } else {
             sender.setOn(true, animated: true)
             locationDetailCell.isHidden = false
