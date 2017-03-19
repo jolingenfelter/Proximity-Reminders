@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 class ReminderDetailViewController: UITableViewController {
     
@@ -30,7 +31,13 @@ class ReminderDetailViewController: UITableViewController {
     }()
     
     
-    var locationReminderSwitch = UISwitch()
+    lazy var locationReminderSwitch: UISwitch = {
+        
+        let locationSwitch = UISwitch()
+        locationSwitch.addTarget(self, action: #selector(toggleLocationSwitch(sender:)), for: .valueChanged)
+        
+        return locationSwitch
+    }()
     
     lazy var locationLabel: UILabel = {
         
@@ -69,6 +76,18 @@ class ReminderDetailViewController: UITableViewController {
             self.title = "New Reminder"
         } else {
             self.title = "Details"
+        }
+        
+        if reminder?.location == nil {
+            
+            locationReminderSwitch.isOn = false
+            locationDetailCell.isHidden = true
+            
+        } else {
+            
+            locationReminderSwitch.isOn = true
+            locationDetailCell.isHidden = false
+            
         }
         
     }
@@ -194,3 +213,39 @@ extension ReminderDetailViewController {
     }
     
 }
+
+// MARK: - Location
+
+extension ReminderDetailViewController {
+    
+    func toggleLocationSwitch(sender: UISwitch) {
+        
+        if sender.isOn {
+            sender.setOn(false, animated: true)
+            locationDetailCell.isHidden = true
+        } else {
+            sender.setOn(true, animated: true)
+            locationDetailCell.isHidden = false
+        }
+        
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
