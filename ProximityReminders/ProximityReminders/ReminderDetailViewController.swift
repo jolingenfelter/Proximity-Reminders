@@ -68,6 +68,7 @@ class ReminderDetailViewController: UITableViewController {
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tap(gesture:)))
         self.tableView.addGestureRecognizer(tapGesture)
+        tapGesture.delegate = self
 
     }
 
@@ -252,6 +253,21 @@ extension ReminderDetailViewController {
         
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        switch (indexPath.section, indexPath.row) {
+            
+        case (1,1):
+            
+            let addLocationViewController = AddLocationViewController()
+            navigationController?.pushViewController(addLocationViewController, animated: true)
+            
+        default: break
+            
+        }
+        
+    }
+    
 }
 
 // MARK: - Location
@@ -289,10 +305,22 @@ extension ReminderDetailViewController: UITextFieldDelegate {
 
 // MARK: - Gestures
 
-extension ReminderDetailViewController {
+extension ReminderDetailViewController: UIGestureRecognizerDelegate {
     
     func tap(gesture: UITapGestureRecognizer) {
         reminderTextField.resignFirstResponder()
+        
+    }
+    
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        
+        let tapPoint = gestureRecognizer.location(in: self.tableView)
+        
+        if locationDetailCell.frame.contains(tapPoint) {
+            return false
+        }
+        
+        return true
     }
     
 }
