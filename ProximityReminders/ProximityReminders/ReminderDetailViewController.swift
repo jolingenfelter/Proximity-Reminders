@@ -47,12 +47,12 @@ class ReminderDetailViewController: UITableViewController {
         
         return label
     }()
+    
+    let locationDetailCell = UITableViewCell()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        
-        self.tableView = UITableView(frame: self.tableView.frame, style: .grouped)
         
         setupView(forReminder: reminder)
 
@@ -117,6 +117,7 @@ extension ReminderDetailViewController {
                 reminderTextField.trailingAnchor.constraint(equalTo: cell.contentView.trailingAnchor, constant: -15)
                 ])
             
+            return cell
             
         case (1, 0):
             
@@ -134,30 +135,34 @@ extension ReminderDetailViewController {
                 locationReminderSwitch.centerYAnchor.constraint(equalTo: cell.contentView.centerYAnchor),
                 locationReminderSwitch.trailingAnchor.constraint(equalTo: cell.contentView.trailingAnchor, constant: -10)])
             
+            return cell
+            
             
         case (1, 1):
             
-            cell.contentView.addSubview(locationLabel)
+            locationDetailCell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
+            
+            locationDetailCell.contentView.addSubview(locationLabel)
             locationLabel.translatesAutoresizingMaskIntoConstraints = false
             
             NSLayoutConstraint.activate([
-                locationLabel.centerYAnchor.constraint(equalTo: cell.contentView.centerYAnchor, constant: -5),
-                locationLabel.leadingAnchor.constraint(equalTo: cell.contentView.leadingAnchor, constant: 15)])
+                locationLabel.centerYAnchor.constraint(equalTo: locationDetailCell.contentView.centerYAnchor, constant: -5),
+                locationLabel.leadingAnchor.constraint(equalTo: locationDetailCell.contentView.leadingAnchor, constant: 15)])
             
-            cell.contentView.addSubview(locationDetailLabel)
+            locationDetailCell.contentView.addSubview(locationDetailLabel)
             locationDetailLabel.translatesAutoresizingMaskIntoConstraints = false
             
             NSLayoutConstraint.activate([
                 locationDetailLabel.topAnchor.constraint(equalTo: locationLabel.bottomAnchor, constant: 1),
                 locationDetailLabel.leadingAnchor.constraint(equalTo: locationLabel.leadingAnchor),
-                locationDetailLabel.trailingAnchor.constraint(equalTo: cell.contentView.trailingAnchor, constant: -15)])
+                locationDetailLabel.trailingAnchor.constraint(equalTo: locationDetailCell.contentView.trailingAnchor, constant: -15)])
+            
+            return locationDetailCell
             
             
         default:
-            break
+            return cell
         }
-        
-        return cell
         
     }
     
