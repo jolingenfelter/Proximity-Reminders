@@ -18,6 +18,7 @@ class ReminderDetailViewController: UITableViewController {
         let textField = UITextField()
         textField.placeholder = "Pickup dry cleaning"
         textField.backgroundColor = .white
+        textField.delegate = self
         
         return textField
     }()
@@ -64,6 +65,9 @@ class ReminderDetailViewController: UITableViewController {
         navigationBarSetup()
         
         setupView(forReminder: reminder)
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tap(gesture:)))
+        self.tableView.addGestureRecognizer(tapGesture)
 
     }
 
@@ -77,6 +81,12 @@ class ReminderDetailViewController: UITableViewController {
         if let reminder = reminder {
             
             self.title = "Details"
+            
+            if let text = reminder.text {
+                
+                reminderTextField.text = text
+                
+            }
             
             if let location = reminder.location {
                 
@@ -255,8 +265,10 @@ extension ReminderDetailViewController {
             locationDetailCell.isHidden = true
             
             reminderLocation = nil
+            locationDetailLabel.text = nil
             
         } else {
+            
             sender.setOn(true, animated: true)
             locationDetailCell.isHidden = false
         }
@@ -264,7 +276,26 @@ extension ReminderDetailViewController {
     }
 }
 
+// MARK: - UITextFieldDelegate
 
+extension ReminderDetailViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        reminderTextField.resignFirstResponder()
+        return true
+    }
+    
+}
+
+// MARK: - Gestures
+
+extension ReminderDetailViewController {
+    
+    func tap(gesture: UITapGestureRecognizer) {
+        reminderTextField.resignFirstResponder()
+    }
+    
+}
 
 
 

@@ -64,7 +64,12 @@ extension RemindersViewController: UITableViewDelegate {
         let reminder = dataSource.fetchedResultsController.object(at: indexPath) as! Reminder
         
         if reminder.completed == false {
-            print("not complete!")
+            
+            let reminderDetailViewController = ReminderDetailViewController(style: .grouped)
+            reminderDetailViewController.reminder = reminder
+            let navigationController = UINavigationController(rootViewController: reminderDetailViewController)
+            self.present(navigationController, animated: true, completion: nil)
+            
         }
         
         
