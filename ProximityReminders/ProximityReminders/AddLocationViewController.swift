@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MapKit
 
 class AddLocationViewController: UIViewController {
     
@@ -29,6 +30,11 @@ class AddLocationViewController: UIViewController {
         
         return segmentedControl
     }()
+    
+    lazy var mapView: MKMapView = {
+        let mapView = MKMapView()
+        return mapView
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,9 +51,31 @@ class AddLocationViewController: UIViewController {
         
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.centerYAnchor, constant: 100),
+            tableView.bottomAnchor.constraint(equalTo: view.centerYAnchor, constant: 50),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)])
+        
+        // SegmentedControl
+        
+        view.addSubview(notificationTimeOptionButtons)
+        notificationTimeOptionButtons.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            notificationTimeOptionButtons.topAnchor.constraint(equalTo: tableView.bottomAnchor),
+            notificationTimeOptionButtons.heightAnchor.constraint(equalToConstant: 25),
+            notificationTimeOptionButtons.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15),
+            notificationTimeOptionButtons.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15)])
+        
+        // MapView
+        
+        view.addSubview(mapView)
+        mapView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            mapView.topAnchor.constraint(equalTo: notificationTimeOptionButtons.bottomAnchor, constant: 5),
+            mapView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            mapView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            mapView.trailingAnchor.constraint(equalTo: view.trailingAnchor)])
         
     }
 
