@@ -44,16 +44,16 @@ class AddLocationViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         
-        // TableView
+        // MapView
         
-        view.addSubview(tableView)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(mapView)
+        mapView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.topAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.centerYAnchor, constant: 50),
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)])
+            mapView.topAnchor.constraint(equalTo: view.topAnchor),
+            mapView.bottomAnchor.constraint(equalTo: view.centerYAnchor, constant: -50),
+            mapView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            mapView.trailingAnchor.constraint(equalTo: view.trailingAnchor)])
         
         // SegmentedControl
         
@@ -61,21 +61,22 @@ class AddLocationViewController: UIViewController {
         notificationTimeOptionButtons.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            notificationTimeOptionButtons.topAnchor.constraint(equalTo: tableView.bottomAnchor),
+            notificationTimeOptionButtons.topAnchor.constraint(equalTo: mapView.bottomAnchor, constant: 5),
             notificationTimeOptionButtons.heightAnchor.constraint(equalToConstant: 25),
             notificationTimeOptionButtons.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15),
             notificationTimeOptionButtons.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15)])
         
-        // MapView
+        // TableView
         
-        view.addSubview(mapView)
-        mapView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(tableView)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            mapView.topAnchor.constraint(equalTo: notificationTimeOptionButtons.bottomAnchor, constant: 5),
-            mapView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            mapView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            mapView.trailingAnchor.constraint(equalTo: view.trailingAnchor)])
+            tableView.topAnchor.constraint(equalTo: notificationTimeOptionButtons.bottomAnchor, constant: 5),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)])
+        
         
     }
 
@@ -117,8 +118,6 @@ extension AddLocationViewController {
 extension AddLocationViewController {
     
     func navigationBarSetup() {
-        
-        navigationController?.navigationBar.isTranslucent = false
         
         let saveLocationButton = UIBarButtonItem(title: "Save Location", style: .plain, target: self, action: #selector(saveLocationPressed))
         navigationItem.rightBarButtonItem = saveLocationButton
