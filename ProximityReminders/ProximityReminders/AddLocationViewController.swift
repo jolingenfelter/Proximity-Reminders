@@ -14,16 +14,13 @@ class AddLocationViewController: UIViewController {
     lazy var tableView: UITableView = {
         
         let tableView = UITableView()
-        let searchController = UISearchController(searchResultsController: nil)
-        searchController.searchResultsUpdater = self
-        tableView.tableHeaderView = searchController.searchBar
         
         return tableView
     }()
     
     lazy var notificationTimeOptionButtons: UISegmentedControl = {
         
-        let items = ["On arrival", "On departure"]
+        let items = ["Reminder on arrival", "Reminder on departure"]
         let segmentedControl = UISegmentedControl(items: items)
         segmentedControl.selectedSegmentIndex = 0
         segmentedControl.addTarget(self, action: #selector(toggleSegmentController(sender:)), for: .valueChanged)
@@ -35,11 +32,27 @@ class AddLocationViewController: UIViewController {
         let mapView = MKMapView()
         return mapView
     }()
+    
+    
+    
+    lazy var searchController: UISearchController = {
+        let controller = UISearchController(searchResultsController: nil)
+        return controller
+    }()
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         navigationBarSetup()
+        configureSearchController()
+        
+        self.edgesForExtendedLayout = []
+        self.extendedLayoutIncludesOpaqueBars = true
     }
     
     override func viewDidLayoutSubviews() {
@@ -95,12 +108,37 @@ extension AddLocationViewController: UITableViewDelegate {
 
 // MARK: UISearchController
 
-extension AddLocationViewController: UISearchControllerDelegate, UISearchResultsUpdating {
+extension AddLocationViewController: UISearchControllerDelegate, UISearchResultsUpdating, UISearchBarDelegate {
+    
+    func configureSearchController() {
+        
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.delegate = self
+        searchController.dimsBackgroundDuringPresentation = false
+        searchController.searchBar.sizeToFit()
+        searchController.searchBar.setShowsCancelButton(false, animated: true)
+        searchController.hidesNavigationBarDuringPresentation = false
+        
+        tableView.tableHeaderView = searchController.searchBar
+    }
     
     func updateSearchResults(for searchController: UISearchController) {
         
     }
     
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+        searchBar.setShowsCancelButton(false, animated: true)
+    }
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        searchBar.setShowsCancelButton(true, animated: true)
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+        searchBar.setShowsCancelButton(false, animated: true)
+    }
 }
 
 // MARK: - SegmentedControll
