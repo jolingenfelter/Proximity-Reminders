@@ -9,7 +9,14 @@
 import UIKit
 import MapKit
 
+enum ReminderType: Int {
+    case Arrival = 1
+    case Departure = 2
+}
+
 class AddLocationViewController: UIViewController {
+    
+    // View Variables
     
     lazy var tableView: UITableView = {
         
@@ -28,22 +35,21 @@ class AddLocationViewController: UIViewController {
         return segmentedControl
     }()
     
-    lazy var mapView: MKMapView = {
-        let mapView = MKMapView()
-        return mapView
-    }()
-    
-    
-    
     lazy var searchController: UISearchController = {
         let controller = UISearchController(searchResultsController: nil)
         return controller
     }()
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-        
-    }
+    // Location Variables
+    
+    var searchLocations: [MKMapItem] = []
+    
+    lazy var mapView: MKMapView = {
+        let mapView = MKMapView()
+        return mapView
+    }()
+    
+    var locationManager: LocationManager?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,7 +59,12 @@ class AddLocationViewController: UIViewController {
         
         self.edgesForExtendedLayout = []
         self.extendedLayoutIncludesOpaqueBars = true
+        
+        locationManager = LocationManager(mapView: mapView)
     }
+    
+    // Other
+    var reminderType: ReminderType?
     
     override func viewDidLayoutSubviews() {
         
@@ -100,13 +111,28 @@ class AddLocationViewController: UIViewController {
 
 }
 
-// MARK: UITableViewDelegate 
+// MARK: TableView
 
-extension AddLocationViewController: UITableViewDelegate {
+extension AddLocationViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return searchLocations.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = self.tableView.dequeueReusableCell(withIdentifier: LocationCell.reuseIdentifier, for: indexPath) as! LocationCell
+        
+        let searchLocation = searchLocations[indexPath.row].placemark
+        cell.titleLabel.text = searchLocation.name
+        cell.detailTextLabel?.text = locationManager?.parseAddress(location: searchLocation)
+    
+        return cell
+    }
     
 }
 
-// MARK: UISearchController
+// MARK: SearchController
 
 extension AddLocationViewController: UISearchControllerDelegate, UISearchResultsUpdating, UISearchBarDelegate {
     
@@ -123,6 +149,26 @@ extension AddLocationViewController: UISearchControllerDelegate, UISearchResults
     }
     
     func updateSearchResults(for searchController: UISearchController) {
+        
+        guard let searchText = searchController.searchBar.text else {
+            return
+        }
+        
+        let request = MKLocalSearchRequest()
+        request.naturalLanguageQuery = searchText
+        request.region = mapView.region
+        
+        let search = MKLocalSearch(request: request)
+        search.start { (response, error) in
+            
+            guard let response = response else {
+                print((error?.localizedDescription)! as String)
+                return
+            }
+            
+            self.searchLocations = response.mapItems
+            self.tableView.reloadData()
+        }
         
     }
     
@@ -146,6 +192,19 @@ extension AddLocationViewController: UISearchControllerDelegate, UISearchResults
 extension AddLocationViewController {
     
     func toggleSegmentController(sender: UISegmentedControl) {
+        
+        switch sender.selectedSegmentIndex {
+        
+        case 0 :
+            self.reminderType = ReminderType.Arrival
+        
+        case 1:
+            self.reminderType = ReminderType.Departure
+            
+        default:
+            break
+            
+        }
         
     }
     
