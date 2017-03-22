@@ -23,7 +23,7 @@ class AddLocationViewController: UIViewController {
         let tableView = UITableView()
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(LocationCell.self, forCellReuseIdentifier: LocationCell.reuseIdentifier)
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         
         return tableView
     }()
@@ -127,10 +127,10 @@ extension AddLocationViewController: UITableViewDelegate, UITableViewDataSource 
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = self.tableView.dequeueReusableCell(withIdentifier: LocationCell.reuseIdentifier, for: indexPath) as! LocationCell
+        let cell = self.tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         
         let searchLocation = searchLocations[indexPath.row].placemark
-        cell.titleLabel.text = searchLocation.name
+        cell.textLabel?.text = searchLocation.name
         cell.detailTextLabel?.text = locationManager?.parseAddress(location: searchLocation)
     
         return cell
@@ -168,7 +168,6 @@ extension AddLocationViewController: UISearchControllerDelegate, UISearchResults
         search.start { (response, error) in
             
             guard let response = response else {
-                print((error?.localizedDescription)! as String)
                 return
             }
             
