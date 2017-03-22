@@ -21,6 +21,9 @@ class AddLocationViewController: UIViewController {
     lazy var tableView: UITableView = {
         
         let tableView = UITableView()
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(LocationCell.self, forCellReuseIdentifier: LocationCell.reuseIdentifier)
         
         return tableView
     }()
