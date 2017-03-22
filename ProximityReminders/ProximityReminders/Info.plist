@@ -33,6 +33,8 @@
 	</array>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Proximity Reminders gathers information about your location in order to send you reminders at the appropriate time.  Without enabling your location, reminder notifications cannot be sent.</string>
+	<key>NSLocationUsageDescription</key>
+	<string>Proximity Reminders needs to access your location.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>location</string>

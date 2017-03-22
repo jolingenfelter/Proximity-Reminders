@@ -54,12 +54,18 @@ class AddLocationViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         navigationBarSetup()
+        
         configureSearchController()
+        searchController.loadViewIfNeeded()
         
         self.edgesForExtendedLayout = []
         self.extendedLayoutIncludesOpaqueBars = true
         
         locationManager = LocationManager(mapView: mapView)
+    }
+    
+    deinit {
+        searchController.loadViewIfNeeded()
     }
     
     
