@@ -43,7 +43,7 @@ class AddLocationViewController: UIViewController {
     // Location Variables
     
     var searchLocations: [MKMapItem] = []
-    var mapView: MKMapView?
+    let mapView = MKMapView()
     
     var locationManager: LocationManager?
     
@@ -59,18 +59,13 @@ class AddLocationViewController: UIViewController {
         self.edgesForExtendedLayout = []
         self.extendedLayoutIncludesOpaqueBars = true
         
-        mapView = MKMapView()
-        locationManager = LocationManager(mapView: mapView!)
+        locationManager = LocationManager(mapView: mapView)
     }
     
     
     override func viewDidLayoutSubviews() {
         
         // MapView
-        
-        guard let mapView = mapView else {
-            return
-        }
         
         view.addSubview(mapView)
         mapView.translatesAutoresizingMaskIntoConstraints = false
@@ -153,10 +148,6 @@ extension AddLocationViewController: UISearchControllerDelegate, UISearchResults
     func updateSearchResults(for searchController: UISearchController) {
         
         guard let searchText = searchController.searchBar.text else {
-            return
-        }
-        
-        guard let mapView = mapView else {
             return
         }
         
