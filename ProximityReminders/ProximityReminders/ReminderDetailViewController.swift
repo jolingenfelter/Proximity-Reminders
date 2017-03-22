@@ -104,6 +104,8 @@ class ReminderDetailViewController: UITableViewController {
         } else {
             
             self.title = "New Reminder"
+            locationReminderSwitch.isOn = false
+            locationDetailCell.isHidden = true
             
         }
         

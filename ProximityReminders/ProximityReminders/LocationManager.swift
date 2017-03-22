@@ -119,7 +119,9 @@ extension LocationManager: CLLocationManagerDelegate {
         
         func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
             
-            guard let location = locations.first else { return }
+            guard let location = locations.first else {
+                return
+            }
             
             geoCoder.reverseGeocodeLocation(location) { placemarks, error in
                 
