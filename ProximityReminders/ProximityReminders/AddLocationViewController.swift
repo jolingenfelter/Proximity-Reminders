@@ -128,12 +128,21 @@ extension AddLocationViewController: UITableViewDelegate, UITableViewDataSource 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "Cell")
+        cell.selectionStyle = .none
         
         let searchLocation = searchLocations[indexPath.row].placemark
         cell.textLabel?.text = searchLocation.name
         cell.detailTextLabel?.text = locationManager?.parseAddress(location: searchLocation)
     
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        searchController.searchBar.endEditing(true)
+        
+        let selectedLocation = searchLocations[indexPath.row].placemark
+        locationManager?.dropPinAndZoom(placemark: selectedLocation)
     }
     
 }
