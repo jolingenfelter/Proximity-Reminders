@@ -33,7 +33,7 @@ extension Reminder {
         return reminder
     }
     
-    class func reminder(withText text: String, andLocation location: CLLocation) -> Reminder {
+    class func reminder(withText text: String, andLocation location: CLLocation?) -> Reminder {
         
         let reminder = Reminder.reminder(withText: text)
         reminder.addLocation(location: location)
