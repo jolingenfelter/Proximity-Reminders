@@ -47,7 +47,8 @@ class AddLocationViewController: UIViewController {
     
     var searchLocations: [MKMapItem] = []
     let mapView = MKMapView()
-    
+    var locationToSave: CLLocation?
+    var savedLocation: CLLocation?
     var locationManager: LocationManager?
     
     // Other
@@ -65,6 +66,8 @@ class AddLocationViewController: UIViewController {
         self.extendedLayoutIncludesOpaqueBars = true
         
         locationManager = LocationManager(mapView: mapView)
+        mapView.showsUserLocation = true
+        
     }
     
     deinit {
@@ -109,6 +112,15 @@ class AddLocationViewController: UIViewController {
         
         
     }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(true)
+        
+        mapView.removeFromSuperview()
+        tableView.removeFromSuperview()
+        notificationTimeOptionButtons.removeFromSuperview()
+        
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -128,7 +140,6 @@ extension AddLocationViewController: UITableViewDelegate, UITableViewDataSource 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "Cell")
-        cell.selectionStyle = .none
         
         let searchLocation = searchLocations[indexPath.row].placemark
         cell.textLabel?.text = searchLocation.name
@@ -143,6 +154,8 @@ extension AddLocationViewController: UITableViewDelegate, UITableViewDataSource 
         
         let selectedLocation = searchLocations[indexPath.row].placemark
         locationManager?.dropPinAndZoom(placemark: selectedLocation)
+        
+        locationToSave = CLLocation(latitude: selectedLocation.coordinate.latitude, longitude: selectedLocation.coordinate.longitude)
     }
     
 }
@@ -237,6 +250,60 @@ extension AddLocationViewController {
     
     func saveLocationPressed() {
         
+        if locationToSave != nil {
+            savedLocation = locationToSave
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "locationSaved"), object: nil)
+            
+            let alert = UIAlertController(title: "Saved", message: "Selected location has been added to your reminder", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "ok", style: .cancel, handler: { (action) in
+                self.presentedViewController?.dismiss(animated: true, completion: nil)
+            })
+            
+            alert.addAction(okAction)
+            
+            if self.presentedViewController == nil {
+                self.present(alert, animated: true, completion: nil)
+            } else {
+                self.presentedViewController?.dismiss(animated: false, completion: nil)
+                self.present(alert, animated: true, completion: nil)
+            }
+            
+        } else {
+            
+            let alert = UIAlertController(title: "Unable to save location", message: "You must select a location in order to save", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "ok", style: .cancel, handler: { (action) in
+                self.presentedViewController?.dismiss(animated: true, completion: nil)
+            })
+            
+            alert.addAction(okAction)
+            
+            if self.presentedViewController == nil {
+                self.present(alert, animated: true, completion: nil)
+            } else {
+                self.presentedViewController?.dismiss(animated: false, completion: nil)
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
+        
     }
-    
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
