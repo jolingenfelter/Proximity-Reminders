@@ -65,7 +65,7 @@ class AddLocationViewController: UIViewController {
         self.edgesForExtendedLayout = []
         self.extendedLayoutIncludesOpaqueBars = true
         
-        locationManager = LocationManager(mapView: mapView)
+        locationManager = LocationManager()
         mapView.showsUserLocation = true
         
     }
@@ -153,7 +153,7 @@ extension AddLocationViewController: UITableViewDelegate, UITableViewDataSource 
         searchController.searchBar.endEditing(true)
         
         let selectedLocation = searchLocations[indexPath.row].placemark
-        locationManager?.dropPinAndZoom(placemark: selectedLocation)
+        locationManager?.dropPinAndZoom(mapView: self.mapView, placemark: selectedLocation)
         
         locationToSave = CLLocation(latitude: selectedLocation.coordinate.latitude, longitude: selectedLocation.coordinate.longitude)
     }

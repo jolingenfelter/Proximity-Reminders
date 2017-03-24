@@ -91,6 +91,8 @@ class ReminderDetailViewController: UITableViewController {
             
             if let location = reminder.location {
                 
+                let locationPoint = CLLocation(latitude: location.latitude, longitude: location.longitude)
+                reminderLocation = locationPoint
                 locationReminderSwitch.isOn = true
                 locationDetailCell.isHidden = false
                 

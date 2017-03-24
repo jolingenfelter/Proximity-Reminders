@@ -14,12 +14,9 @@ class LocationManager: NSObject {
     
     let manager = CLLocationManager()
     let geoCoder = CLGeocoder()
-    let mapView: MKMapView
     var onLocationFix: ((CLPlacemark?, Error?) -> Void)?
     
-        init(mapView: MKMapView) {
-        
-        self.mapView = mapView
+        override init () {
             
         super.init()
         
@@ -81,7 +78,7 @@ class LocationManager: NSObject {
         return addressString
     }
     
-    func dropPinAndZoom(placemark: MKPlacemark) {
+    func dropPinAndZoom(mapView: MKMapView, placemark: MKPlacemark) {
         
         mapView.removeAnnotations(mapView.annotations)
         mapView.removeOverlays(mapView.overlays)
