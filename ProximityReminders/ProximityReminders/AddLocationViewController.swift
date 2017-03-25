@@ -53,6 +53,7 @@ class AddLocationViewController: UIViewController {
     
     // Other
     var reminderType: ReminderType?
+    var searchBar: UISearchBar?
     
     override func viewWillAppear(_ animated: Bool) {
         //self.definesPresentationContext = false
@@ -105,13 +106,28 @@ class AddLocationViewController: UIViewController {
             notificationTimeOptionButtons.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15),
             notificationTimeOptionButtons.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15)])
         
+        // SearchBar
+        
+        guard let searchBar = searchBar else {
+            return
+        }
+        
+        view.addSubview(searchBar)
+        searchBar.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            searchBar.topAnchor.constraint(equalTo: notificationTimeOptionButtons.bottomAnchor, constant: 5),
+            searchBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            searchBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            searchBar.heightAnchor.constraint(equalToConstant: 40)])
+        
         // TableView
         
         view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: notificationTimeOptionButtons.bottomAnchor, constant: 5),
+            tableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)])
@@ -183,7 +199,7 @@ extension AddLocationViewController: UISearchControllerDelegate, UISearchResults
         searchController.searchBar.setShowsCancelButton(false, animated: true)
         searchController.hidesNavigationBarDuringPresentation = false
         
-        tableView.tableHeaderView = searchController.searchBar
+        searchBar = searchController.searchBar
     }
     
     func updateSearchResults(for searchController: UISearchController) {
