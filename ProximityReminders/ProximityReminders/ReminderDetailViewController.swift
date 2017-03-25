@@ -66,9 +66,6 @@ class ReminderDetailViewController: UITableViewController {
         view.backgroundColor = .white
         navigationBarSetup()
         
-        print(reminder?.location?.latitude)
-        print(reminder?.location?.longitude)
-        
         setupView(forReminder: reminder)
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tap(gesture:)))
@@ -100,8 +97,9 @@ class ReminderDetailViewController: UITableViewController {
             if let location = reminder.location {
                 
                 locationManager.reverseLocation(location: location, completion: { (city, street) in
+                    
                     self.locationDetailLabel.text = "\(city), \(street)"
-                    print("\(city), \(street)")
+                    
                 })
                 
                 reminderLocation = CLLocation(latitude: location.latitude, longitude: location.longitude)
@@ -318,6 +316,10 @@ extension ReminderDetailViewController {
         switch (indexPath.section, indexPath.row) {
             
         case (1,1):
+            
+            if reminderLocation != nil {
+                addLocationViewController.savedLocation = reminderLocation
+            }
             
             navigationController?.pushViewController(addLocationViewController, animated: true)
             
