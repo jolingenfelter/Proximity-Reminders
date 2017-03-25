@@ -27,6 +27,8 @@ class ReminderCell: UITableViewCell {
     
     override func layoutSubviews() {
         
+        self.contentView.frame = self.bounds
+        
         contentView.addSubview(reminderTextLabel)
         reminderTextLabel.translatesAutoresizingMaskIntoConstraints = false
         

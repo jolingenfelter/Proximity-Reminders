@@ -62,6 +62,13 @@ extension RemindersDataSource: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         
+        let reminder = self.fetchedResultsController.object(at: indexPath) as! Reminder
+        
+        if editingStyle == .delete {
+            CoreDataStack.sharedInstance.managedObjectContext.delete(reminder)
+            CoreDataStack.sharedInstance.saveContext()
+        }
+        
     }
     
 }
