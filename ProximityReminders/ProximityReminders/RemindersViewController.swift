@@ -25,8 +25,6 @@ class RemindersViewController: UIViewController {
         return reminderDataSource
         
     }()
-    
-    let reminderDetailViewController = ReminderDetailViewController(style: .grouped)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,6 +65,7 @@ extension RemindersViewController: UITableViewDelegate {
         
         if reminder.completed == false {
             
+            let reminderDetailViewController = ReminderDetailViewController(style: .grouped)
             reminderDetailViewController.reminder = reminder
             let navigationController = UINavigationController(rootViewController: reminderDetailViewController)
             self.present(navigationController, animated: true, completion: nil)
@@ -115,7 +114,7 @@ extension RemindersViewController {
     
     func newReminderPressed() {
         
-        reminderDetailViewController.reminder = nil
+        let reminderDetailViewController = ReminderDetailViewController(style: .grouped)
         let navigationController = UINavigationController(rootViewController: reminderDetailViewController)
         
         self.present(navigationController, animated: true, completion: nil)

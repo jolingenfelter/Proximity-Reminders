@@ -140,32 +140,35 @@ extension ReminderDetailViewController {
     
     func savePressed() {
         
-        if let reminderText = reminderTextField.text {
+        if reminderTextField.text != "" {
             
-            if let reminder = self.reminder {
+            if let reminderText = reminderTextField.text {
                 
-                reminder.text = reminderText
-                
-                if let location = reminderLocation {
-                    let locationToSave = Location.location(withLatitude: location.coordinate.longitude, longitude: location.coordinate.latitude)
-                    reminder.location = locationToSave
+                if let reminder = self.reminder {
+                    
+                    reminder.text = reminderText
+                    
+                    if let location = reminderLocation {
+                        let locationToSave = Location.location(withLatitude: location.coordinate.longitude, longitude: location.coordinate.latitude)
+                        reminder.location = locationToSave
+                    }
+                    
+                } else {
+                    
+                    reminder = Reminder.reminder(withText: reminderText, andLocation: reminderLocation)
                 }
                 
-            } else {
+                CoreDataStack.sharedInstance.saveContext()
                 
-                reminder = Reminder.reminder(withText: reminderText, andLocation: reminderLocation)
+                self.dismiss(animated: true) {
+                    self.reminderLocation = nil
+                }
+                
             }
-            
-            CoreDataStack.sharedInstance.saveContext()
             
         } else {
             
             self.presentAlert(withTitle: "Oops!", andMessage: "Reminders require some text")
-            
-        }
-        
-        self.dismiss(animated: true) { 
-            self.reminderLocation = nil
         }
         
     }
