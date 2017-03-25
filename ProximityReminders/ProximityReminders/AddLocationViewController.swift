@@ -50,14 +50,11 @@ class AddLocationViewController: UIViewController {
     var locationToSave: CLLocation?
     var savedLocation: CLLocation?
     var locationManager: LocationManager?
+    var selectedLocation: MKPlacemark?
     
     // Other
     var reminderType: ReminderType?
     var searchBar: UISearchBar?
-    
-    override func viewWillAppear(_ animated: Bool) {
-        //self.definesPresentationContext = false
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -136,15 +133,8 @@ class AddLocationViewController: UIViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        self.definesPresentationContext = true
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(true)
-        
-        mapView.removeFromSuperview()
-        tableView.removeFromSuperview()
-        notificationTimeOptionButtons.removeFromSuperview()
+        super.viewWillDisappear(true)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "CheckLocationAdded"), object: nil, userInfo: nil)
         
     }
 
@@ -178,10 +168,14 @@ extension AddLocationViewController: UITableViewDelegate, UITableViewDataSource 
         
         searchController.searchBar.endEditing(true)
         
-        let selectedLocation = searchLocations[indexPath.row].placemark
-        locationManager?.dropPinAndZoom(mapView: self.mapView, placemark: selectedLocation)
+        selectedLocation = searchLocations[indexPath.row].placemark
         
-        locationToSave = CLLocation(latitude: selectedLocation.coordinate.latitude, longitude: selectedLocation.coordinate.longitude)
+        if let selectedLocation = selectedLocation {
+            locationManager?.dropPinAndZoom(mapView: self.mapView, placemark: selectedLocation)
+            
+            locationToSave = CLLocation(latitude: selectedLocation.coordinate.latitude, longitude: selectedLocation.coordinate.longitude)
+        }
+
     }
     
 }
@@ -278,7 +272,15 @@ extension AddLocationViewController {
         
         if locationToSave != nil {
             savedLocation = locationToSave
-            self.presentAlert(withTitle: "Saved", andMessage: "Selected location has been added to your reminder")
+            
+            guard let selectedLocation = selectedLocation else {
+                return
+            }
+            
+            if let locationText = locationManager?.parseAddress(location: selectedLocation) {
+                self.presentAlert(withTitle: "Saved", andMessage: "\(locationText) has been added to your reminder")
+            }
+            
             
         } else {
             self.presentAlert(withTitle: "Unable to save", andMessage: "You must select a location in order to save")
