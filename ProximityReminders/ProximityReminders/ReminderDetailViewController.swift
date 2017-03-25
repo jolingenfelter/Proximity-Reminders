@@ -59,6 +59,7 @@ class ReminderDetailViewController: UITableViewController {
     let locationDetailCell = UITableViewCell()
     var reminderLocation: CLLocation?
     let locationManager = LocationManager()
+    let addLocationViewController = AddLocationViewController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,6 +71,9 @@ class ReminderDetailViewController: UITableViewController {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tap(gesture:)))
         self.tableView.addGestureRecognizer(tapGesture)
         tapGesture.delegate = self
+        
+        // Notifications
+        NotificationCenter.default.addObserver(self, selector: #selector(addLocation), name: Notification.Name(rawValue: "CheckLocationAdded"), object: nil)
 
     }
 
@@ -298,7 +302,6 @@ extension ReminderDetailViewController {
             
         case (1,1):
             
-            let addLocationViewController = AddLocationViewController()
             navigationController?.pushViewController(addLocationViewController, animated: true)
             
         default: break
@@ -326,6 +329,33 @@ extension ReminderDetailViewController {
             
             sender.setOn(true, animated: true)
             locationDetailCell.isHidden = false
+        }
+        
+    }
+    
+    func addLocation() {
+        
+        reminderLocation = addLocationViewController.savedLocation
+        
+        if let reminderLocation = reminderLocation {
+            
+            locationManager.geoCoder.reverseGeocodeLocation(reminderLocation, completionHandler: { (placemarks, error) in
+                
+                if let placemark = placemarks?.first {
+                    
+                    if let city = placemark.locality, let street = placemark.thoroughfare {
+                        let locationString = "\(city), \(street)"
+                        self.locationDetailLabel.text = locationString
+                    }
+                }
+                
+            })
+            
+        } else {
+            
+            locationReminderSwitch.isOn = false
+            locationDetailCell.isHidden = true
+            
         }
         
     }

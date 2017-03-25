@@ -137,6 +137,15 @@ class AddLocationViewController: UIViewController {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "CheckLocationAdded"), object: nil, userInfo: nil)
         
     }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(true)
+        
+        locationToSave = nil
+        savedLocation = nil
+        selectedLocation = nil
+        
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
