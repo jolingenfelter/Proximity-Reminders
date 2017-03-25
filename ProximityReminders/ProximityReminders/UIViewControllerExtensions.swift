@@ -16,7 +16,12 @@ extension UIViewController {
         let okAction = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
         alert.addAction(okAction)
         
-        self.present(alert, animated: true, completion: nil)
+        if self.presentedViewController == nil {
+            self.present(alert, animated: true, completion: nil)
+        } else {
+            self.presentedViewController?.dismiss(animated: false, completion: nil)
+            self.present(alert, animated: true, completion: nil)
+        }
         
     }
     

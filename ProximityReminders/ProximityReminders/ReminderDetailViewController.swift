@@ -58,6 +58,7 @@ class ReminderDetailViewController: UITableViewController {
     
     let locationDetailCell = UITableViewCell()
     var reminderLocation: CLLocation?
+    let locationManager = LocationManager()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -91,8 +92,12 @@ class ReminderDetailViewController: UITableViewController {
             
             if let location = reminder.location {
                 
-                let locationPoint = CLLocation(latitude: location.latitude, longitude: location.longitude)
-                reminderLocation = locationPoint
+                locationManager.reverseLocation(location: location, completion: { (city, street) in
+                    
+                    self.locationDetailLabel.text = "\(city), \(street)"
+                    
+                })
+                
                 locationReminderSwitch.isOn = true
                 locationDetailCell.isHidden = false
                 

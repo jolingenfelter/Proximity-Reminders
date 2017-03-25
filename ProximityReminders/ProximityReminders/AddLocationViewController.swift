@@ -53,6 +53,10 @@ class AddLocationViewController: UIViewController {
     
     // Other
     var reminderType: ReminderType?
+    
+    override func viewWillAppear(_ animated: Bool) {
+        //self.definesPresentationContext = false
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,6 +71,8 @@ class AddLocationViewController: UIViewController {
         
         locationManager = LocationManager()
         mapView.showsUserLocation = true
+        
+        self.definesPresentationContext = true
         
     }
     
@@ -111,6 +117,10 @@ class AddLocationViewController: UIViewController {
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)])
         
         
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        self.definesPresentationContext = true
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -252,37 +262,10 @@ extension AddLocationViewController {
         
         if locationToSave != nil {
             savedLocation = locationToSave
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "locationSaved"), object: nil)
-            
-            let alert = UIAlertController(title: "Saved", message: "Selected location has been added to your reminder", preferredStyle: .alert)
-            let okAction = UIAlertAction(title: "ok", style: .cancel, handler: { (action) in
-                self.presentedViewController?.dismiss(animated: true, completion: nil)
-            })
-            
-            alert.addAction(okAction)
-            
-            if self.presentedViewController == nil {
-                self.present(alert, animated: true, completion: nil)
-            } else {
-                self.presentedViewController?.dismiss(animated: false, completion: nil)
-                self.present(alert, animated: true, completion: nil)
-            }
+            self.presentAlert(withTitle: "Saved", andMessage: "Selected location has been added to your reminder")
             
         } else {
-            
-            let alert = UIAlertController(title: "Unable to save location", message: "You must select a location in order to save", preferredStyle: .alert)
-            let okAction = UIAlertAction(title: "ok", style: .cancel, handler: { (action) in
-                self.presentedViewController?.dismiss(animated: true, completion: nil)
-            })
-            
-            alert.addAction(okAction)
-            
-            if self.presentedViewController == nil {
-                self.present(alert, animated: true, completion: nil)
-            } else {
-                self.presentedViewController?.dismiss(animated: false, completion: nil)
-                self.present(alert, animated: true, completion: nil)
-            }
+            self.presentAlert(withTitle: "Unable to save", andMessage: "You must select a location in order to save")
         }
         
     }
