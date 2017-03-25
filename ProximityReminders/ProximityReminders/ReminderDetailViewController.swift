@@ -84,9 +84,9 @@ class ReminderDetailViewController: UITableViewController {
     
     func setupView(forReminder reminder: Reminder?) {
         
+        self.title = "Details"
+        
         if let reminder = reminder {
-            
-            self.title = "Details"
             
             if let text = reminder.text {
                 
@@ -114,8 +114,7 @@ class ReminderDetailViewController: UITableViewController {
             }
             
         } else {
-            
-            self.title = "New Reminder"
+        
             locationReminderSwitch.isOn = false
             locationDetailCell.isHidden = true
             
@@ -152,11 +151,10 @@ extension ReminderDetailViewController {
                     guard let location = reminderLocation else {
                         
                         reminder.location = nil
+                        
                         CoreDataStack.sharedInstance.saveContext()
                         
-                        self.dismiss(animated: true) {
-                            self.reminderLocation = nil
-                        }
+                        self.dismiss(animated: true, completion: nil)
                         
                         return
                     }
@@ -172,9 +170,7 @@ extension ReminderDetailViewController {
                 
                 CoreDataStack.sharedInstance.saveContext()
                 
-                self.dismiss(animated: true) {
-                    self.reminderLocation = nil
-                }
+                self.dismiss(animated: true, completion: nil)
                 
             }
             

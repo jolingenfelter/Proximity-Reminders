@@ -50,7 +50,7 @@ class AddLocationViewController: UIViewController {
     var locationToSave: CLLocation?
     var savedLocation: CLLocation?
     var locationManager: LocationManager?
-    var selectedLocation: MKPlacemark?
+    var locationName: MKPlacemark?
     
     // Other
     var reminderType: ReminderType?
@@ -143,7 +143,7 @@ class AddLocationViewController: UIViewController {
         
         locationToSave = nil
         savedLocation = nil
-        selectedLocation = nil
+        locationName = nil
         reminderType = nil
         
     }
@@ -178,9 +178,9 @@ extension AddLocationViewController: UITableViewDelegate, UITableViewDataSource 
         
         searchController.searchBar.endEditing(true)
         
-        selectedLocation = searchLocations[indexPath.row].placemark
+        locationName = searchLocations[indexPath.row].placemark
         
-        if let selectedLocation = selectedLocation {
+        if let selectedLocation = locationName {
             locationManager?.dropPinAndZoom(mapView: self.mapView, placemark: selectedLocation)
             
             locationToSave = CLLocation(latitude: selectedLocation.coordinate.latitude, longitude: selectedLocation.coordinate.longitude)
@@ -281,13 +281,14 @@ extension AddLocationViewController {
     func saveLocationPressed() {
         
         if locationToSave != nil {
+            
             savedLocation = locationToSave
             
-            guard let selectedLocation = selectedLocation else {
+            guard let locationName = locationName else {
                 return
             }
             
-            if let locationText = locationManager?.parseAddress(location: selectedLocation) {
+            if let locationText = locationManager?.parseAddress(location: locationName) {
                 self.presentAlert(withTitle: "Saved", andMessage: "\(locationText) has been added to your reminder")
             }
             
