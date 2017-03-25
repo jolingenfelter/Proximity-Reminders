@@ -66,6 +66,9 @@ class ReminderDetailViewController: UITableViewController {
         view.backgroundColor = .white
         navigationBarSetup()
         
+        print(reminder?.location?.latitude)
+        print(reminder?.location?.longitude)
+        
         setupView(forReminder: reminder)
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tap(gesture:)))
@@ -97,11 +100,11 @@ class ReminderDetailViewController: UITableViewController {
             if let location = reminder.location {
                 
                 locationManager.reverseLocation(location: location, completion: { (city, street) in
-                    
                     self.locationDetailLabel.text = "\(city), \(street)"
-                    
+                    print("\(city), \(street)")
                 })
                 
+                reminderLocation = CLLocation(latitude: location.latitude, longitude: location.longitude)
                 locationReminderSwitch.isOn = true
                 locationDetailCell.isHidden = false
                 
@@ -148,10 +151,21 @@ extension ReminderDetailViewController {
                     
                     reminder.text = reminderText
                     
-                    if let location = reminderLocation {
-                        let locationToSave = Location.location(withLatitude: location.coordinate.longitude, longitude: location.coordinate.latitude)
-                        reminder.location = locationToSave
+                    guard let location = reminderLocation else {
+                        
+                        reminder.location = nil
+                        CoreDataStack.sharedInstance.saveContext()
+                        
+                        self.dismiss(animated: true) {
+                            self.reminderLocation = nil
+                        }
+                        
+                        return
                     }
+                    
+                    let locationToSave = Location.location(withLatitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+                    
+                    reminder.location = locationToSave
                     
                 } else {
                     

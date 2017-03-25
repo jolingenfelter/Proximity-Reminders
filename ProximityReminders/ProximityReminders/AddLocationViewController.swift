@@ -144,6 +144,7 @@ class AddLocationViewController: UIViewController {
         locationToSave = nil
         savedLocation = nil
         selectedLocation = nil
+        reminderType = nil
         
     }
 
