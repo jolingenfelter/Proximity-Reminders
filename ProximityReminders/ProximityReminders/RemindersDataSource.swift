@@ -87,9 +87,16 @@ extension RemindersDataSource {
         
         
         let reminder = fetchedResultsController.object(at: indexPath) as! Reminder
+        //let notificationManager = NotificationManager()
         
         if reminder.completed == false {
+            
             reminder.completed = true
+            
+            if reminder.location != nil {
+                
+            }
+            
         } else {
             reminder.completed = false
         }

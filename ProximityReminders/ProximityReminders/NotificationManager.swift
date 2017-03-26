@@ -14,21 +14,21 @@ struct NotificationManager {
     
     let notificationCenter = UNUserNotificationCenter.current()
     
-    func addLocationEvent(forReminder reminder: Reminder, andReminderType reminderType: ReminderType) -> UNLocationNotificationTrigger? {
+    func addLocationEvent(forReminder reminder: Reminder) -> UNLocationNotificationTrigger? {
         
-        if let location = reminder.location, let reminderID = reminder.id {
+        if let location = reminder.location, let reminderID = reminder.id, let reminderTypeString = reminder.type {
             
             let center = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
             let region = CLCircularRegion(center: center, radius: 50, identifier: reminderID)
             
+            let reminderType = ReminderType(rawValue: reminderTypeString)
             
-            switch reminderType {
-            case .Arrival:
+            if reminderType == .Arrival {
                 
                 region.notifyOnEntry = true
                 region.notifyOnExit = false
                 
-            case .Departure:
+            } else if reminderType == .Departure {
                 
                 region.notifyOnEntry = false
                 region.notifyOnExit = true
@@ -58,8 +58,12 @@ struct NotificationManager {
         
     }
     
-    func removeNotification(withIdentifier id: String) {
-        notificationCenter.removePendingNotificationRequests(withIdentifiers: [id])
+    func removeNotification(fromRemonder reminder: Reminder) {
+        
+        guard let reminderID = reminder.id else {
+            return
+        }
+        notificationCenter.removePendingNotificationRequests(withIdentifiers: [reminderID])
     }
     
 }

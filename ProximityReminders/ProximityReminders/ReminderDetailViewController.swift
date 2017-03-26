@@ -172,16 +172,15 @@ extension ReminderDetailViewController {
                     
                     if let reminderType = reminderType {
                         reminder.type = reminderType.rawValue
-                        addNotification(toReminder: reminder, reminderType: reminderType)
+                        addNotification(toReminder: reminder)
                     }
                     
                 } else {
                     
                     reminder = Reminder.reminder(withText: reminderText, type: reminderType?.rawValue, andLocation: reminderLocation)
                     
-                    if let reminderType = reminderType {
-                        addNotification(toReminder: reminder!, reminderType: reminderType)
-                    }
+                    addNotification(toReminder: reminder!)
+                    
                     
                 }
                 
@@ -399,10 +398,10 @@ extension ReminderDetailViewController {
         
     }
     
-    func addNotification(toReminder reminder: Reminder, reminderType: ReminderType) {
+    func addNotification(toReminder reminder: Reminder) {
         
         let notificationManager = NotificationManager()
-        let eventWithLocation = notificationManager.addLocationEvent(forReminder: reminder, andReminderType: reminderType)
+        let eventWithLocation = notificationManager.addLocationEvent(forReminder: reminder)
         notificationManager.scheduleNewNotification(withReminder: reminder, locationTrigger: eventWithLocation)
         
     }
