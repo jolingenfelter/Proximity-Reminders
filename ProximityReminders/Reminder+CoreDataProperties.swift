@@ -34,9 +34,10 @@ extension Reminder {
         return reminder
     }
     
-    class func reminder(withText text: String, andLocation location: CLLocation?) -> Reminder {
+    class func reminder(withText text: String, type: String?, andLocation location: CLLocation?) -> Reminder {
         
         let reminder = Reminder.reminder(withText: text)
+        reminder.type = type
         reminder.addLocation(location: location)
         
         return reminder
@@ -64,5 +65,6 @@ extension Reminder {
     @NSManaged public var id: String?
     @NSManaged public var date: Date?
     @NSManaged public var location: Location?
+    @NSManaged public var type: String?
 
 }

@@ -169,12 +169,13 @@ extension ReminderDetailViewController {
                     reminder.location = locationToSave
                     
                     if let reminderType = reminderType {
+                        reminder.type = reminderType.rawValue
                         addNotification(toReminder: reminder, reminderType: reminderType)
                     }
                     
                 } else {
                     
-                    reminder = Reminder.reminder(withText: reminderText, andLocation: reminderLocation)
+                    reminder = Reminder.reminder(withText: reminderText, type: reminderType?.rawValue, andLocation: reminderLocation)
                     
                     if let reminderType = reminderType {
                         addNotification(toReminder: reminder!, reminderType: reminderType)
@@ -366,7 +367,6 @@ extension ReminderDetailViewController {
         
         reminderLocation = addLocationViewController.savedLocation
         reminderType = addLocationViewController.reminderType
-        print(reminderType?.rawValue)
         
         if let reminderLocation = reminderLocation {
             
