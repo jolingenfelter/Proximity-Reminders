@@ -97,7 +97,7 @@ class ReminderDetailViewController: UITableViewController {
             
             if let location = reminder.location, let address = reminder.addressString {
                
-              reminderLocation = CLLocation(latitude: location.latitude, longitude: location.longitude)
+                reminderLocation = CLLocation(latitude: location.latitude, longitude: location.longitude)
                 reminderAddress = address
                 
                 locationDetailLabel.text = address

@@ -57,7 +57,6 @@ class AddLocationViewController: UIViewController {
     // Other
     var reminderType: ReminderType?
     var searchBar: UISearchBar?
-    var locationSearch: MKLocalSearch?
     var reminderAddress: String?
     
     override func viewWillAppear(_ animated: Bool) {
@@ -172,8 +171,8 @@ class AddLocationViewController: UIViewController {
         
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "CheckLocationAdded"), object: nil, userInfo: nil)
         
-        if self.presentedViewController != nil {
-            self.presentedViewController?.dismiss(animated: true, completion: nil)
+        if let presentedVC = self.presentedViewController {
+            presentedVC.dismiss(animated: true, completion: nil)
         }
     
     }
@@ -262,8 +261,8 @@ extension AddLocationViewController: UISearchControllerDelegate, UISearchResults
         searchRequest.naturalLanguageQuery = searchText
         searchRequest.region = mapView.region
         
-        locationSearch = MKLocalSearch(request: searchRequest)
-        locationSearch!.start { (response, error) in
+        let search = MKLocalSearch(request: searchRequest)
+        search.start { (response, error) in
             
             guard let response = response else {
                 return
