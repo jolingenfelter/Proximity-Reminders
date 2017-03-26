@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+import Contacts
 
 enum ReminderType: String {
     case Arrival
@@ -51,26 +52,54 @@ class AddLocationViewController: UIViewController {
     var locationToSave: CLLocation?
     var savedLocation: CLLocation?
     var locationManager: LocationManager?
-    var locationName: MKPlacemark?
+    var locationPlacemark: MKPlacemark?
     
     // Other
     var reminderType: ReminderType?
     var searchBar: UISearchBar?
     var locationSearch: MKLocalSearch?
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        
+        locationManager = LocationManager(mapView: mapView)
+        configureSearchController()
+        
+        if let savedLocation = savedLocation {
+            
+            let coordiante = CLLocationCoordinate2D(latitude: savedLocation.coordinate.latitude, longitude: savedLocation.coordinate.longitude)
+            
+            let placemark = MKPlacemark(coordinate: coordiante)
+            
+            //searchBar!.text = placemark.addressDictionary?["City"] as? String
+        
+            locationManager?.dropPinAndZoom(placemark: placemark)
+            
+        } else {
+            
+            locationManager!.manager.startUpdatingLocation()
+            
+            if let managerLocation = locationManager!.manager.location {
+                let span = MKCoordinateSpanMake(0.5, 0.5)
+                let location = CLLocationCoordinate2DMake(managerLocation.coordinate.latitude, managerLocation.coordinate.longitude)
+                let region = MKCoordinateRegionMake(location, span)
+                mapView.setRegion(region, animated: true)
+                mapView.showsUserLocation = true
+                
+                locationManager!.manager.stopUpdatingLocation()
+            }
+            
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         navigationBarSetup()
-        
-        configureSearchController()
         searchController.loadViewIfNeeded()
         
         self.edgesForExtendedLayout = []
         self.extendedLayoutIncludesOpaqueBars = true
-        
-        locationManager = LocationManager()
-        mapView.showsUserLocation = true
         
         self.definesPresentationContext = true
         
@@ -153,7 +182,7 @@ class AddLocationViewController: UIViewController {
         
         locationToSave = nil
         savedLocation = nil
-        locationName = nil
+        locationPlacemark = nil
         reminderType = nil
         
     }
@@ -188,13 +217,13 @@ extension AddLocationViewController: UITableViewDelegate, UITableViewDataSource 
         
         searchController.searchBar.endEditing(true)
         
-        locationName = searchLocations[indexPath.row].placemark
+        locationPlacemark = searchLocations[indexPath.row].placemark
         
-        locationManager?.dropPinAndZoom(mapView: self.mapView, placemark: locationName!)
+        locationManager?.dropPinAndZoom(placemark: locationPlacemark!)
             
-        locationToSave = CLLocation(latitude: locationName!.coordinate.latitude, longitude: locationName!.coordinate.longitude)
+        locationToSave = CLLocation(latitude: locationPlacemark!.coordinate.latitude, longitude: locationPlacemark!.coordinate.longitude)
         
-        searchBar?.text = locationName?.title
+        searchBar?.text = locationPlacemark?.title
         searchBar?.resignFirstResponder()
         tableView.isHidden = true
 
@@ -302,7 +331,7 @@ extension AddLocationViewController {
             
             savedLocation = locationToSave
             
-            guard let locationName = locationName else {
+            guard let locationName = locationPlacemark else {
                 return
             }
             
@@ -317,10 +346,6 @@ extension AddLocationViewController {
         
     }
 }
-
-
-
-
 
 
 

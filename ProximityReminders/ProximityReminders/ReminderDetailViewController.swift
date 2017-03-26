@@ -59,7 +59,7 @@ class ReminderDetailViewController: UITableViewController {
     let locationDetailCell = UITableViewCell()
     var reminderLocation: CLLocation?
     var reminderType: ReminderType?
-    let locationManager = LocationManager()
+    let locationManager = LocationManager(mapView: nil)
     let addLocationViewController = AddLocationViewController()
 
     override func viewDidLoad() {

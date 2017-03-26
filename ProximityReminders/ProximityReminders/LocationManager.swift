@@ -15,9 +15,12 @@ class LocationManager: NSObject {
     let manager = CLLocationManager()
     let geoCoder = CLGeocoder()
     var onLocationFix: ((CLPlacemark?, Error?) -> Void)?
+    var mapView: MKMapView?
     
-        override init () {
-            
+    init (mapView: MKMapView?) {
+        
+        self.mapView = mapView
+        
         super.init()
         
         manager.desiredAccuracy = kCLLocationAccuracyBest
@@ -78,7 +81,11 @@ class LocationManager: NSObject {
         return addressString
     }
     
-    func dropPinAndZoom(mapView: MKMapView, placemark: MKPlacemark) {
+    func dropPinAndZoom(placemark: MKPlacemark) {
+        
+        guard let mapView = mapView else {
+            return
+        }
         
         mapView.removeAnnotations(mapView.annotations)
         mapView.removeOverlays(mapView.overlays)
