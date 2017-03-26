@@ -59,7 +59,7 @@ class ReminderDetailViewController: UITableViewController {
     let locationDetailCell = UITableViewCell()
     var reminderLocation: CLLocation?
     var reminderType: ReminderType?
-    let locationManager = LocationManager(mapView: nil)
+    var reminderAddress: String?
     let addLocationViewController = AddLocationViewController()
 
     override func viewDidLoad() {
@@ -95,15 +95,12 @@ class ReminderDetailViewController: UITableViewController {
                 
             }
             
-            if let location = reminder.location {
+            if let location = reminder.location, let address = reminder.addressString {
+               
+              reminderLocation = CLLocation(latitude: location.latitude, longitude: location.longitude)
+                reminderAddress = address
                 
-                locationManager.reverseLocation(location: location, completion: { (city, street) in
-                    
-                    self.locationDetailLabel.text = "\(city), \(street)"
-                    
-                })
-                
-                reminderLocation = CLLocation(latitude: location.latitude, longitude: location.longitude)
+                locationDetailLabel.text = address
                 locationReminderSwitch.isOn = true
                 locationDetailCell.isHidden = false
                 
@@ -157,7 +154,7 @@ extension ReminderDetailViewController {
                     
                     // No location reminder
                     
-                    guard let location = reminderLocation, let reminderType = reminderType else {
+                    guard let location = reminderLocation, let reminderType = reminderType, let reminderAddress = reminderAddress else {
                         
                         reminder.location = nil
                         CoreDataStack.sharedInstance.saveContext()
@@ -171,6 +168,8 @@ extension ReminderDetailViewController {
                     let locationToSave = Location.location(withLatitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
                     
                     reminder.location = locationToSave
+                    
+                    reminder.addressString = reminderAddress
                 
                     reminder.type = reminderType.rawValue
                         
@@ -179,7 +178,7 @@ extension ReminderDetailViewController {
                     
                 } else {
                     
-                    reminder = Reminder.reminder(withText: reminderText, type: reminderType?.rawValue, andLocation: reminderLocation)
+                    reminder = Reminder.reminder(withText: reminderText, type: reminderType?.rawValue, address: reminderAddress, andLocation: reminderLocation)
                     
                     notificationManager.addNotification(toReminder: reminder!)
                     
@@ -375,23 +374,12 @@ extension ReminderDetailViewController {
         
         reminderLocation = addLocationViewController.savedLocation
         
-        if let reminderLocation = reminderLocation {
+        if reminderLocation != nil {
             
             reminderType = addLocationViewController.reminderType
+            reminderAddress = addLocationViewController.reminderAddress
+            locationDetailLabel.text = reminderAddress
             
-            // Update Location Label
-            
-            locationManager.geoCoder.reverseGeocodeLocation(reminderLocation, completionHandler: { (placemarks, error) in
-                
-                if let placemark = placemarks?.first {
-                    
-                    if let city = placemark.locality, let street = placemark.thoroughfare {
-                        let locationString = "\(city), \(street)"
-                        self.locationDetailLabel.text = locationString
-                    }
-                }
-                
-            })
             
         } else {
             

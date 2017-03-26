@@ -58,6 +58,7 @@ class AddLocationViewController: UIViewController {
     var reminderType: ReminderType?
     var searchBar: UISearchBar?
     var locationSearch: MKLocalSearch?
+    var reminderAddress: String?
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
@@ -71,7 +72,7 @@ class AddLocationViewController: UIViewController {
             
             let placemark = MKPlacemark(coordinate: coordiante)
             
-            //searchBar!.text = placemark.addressDictionary?["City"] as? String
+            searchBar!.text = placemark.name
         
             locationManager?.dropPinAndZoom(placemark: placemark)
             
@@ -184,6 +185,7 @@ class AddLocationViewController: UIViewController {
         savedLocation = nil
         locationPlacemark = nil
         reminderType = nil
+        reminderAddress = nil
         
     }
 
@@ -225,6 +227,7 @@ extension AddLocationViewController: UITableViewDelegate, UITableViewDataSource 
         
         searchBar?.text = locationPlacemark?.title
         searchBar?.resignFirstResponder()
+        reminderAddress = locationPlacemark?.title
         tableView.isHidden = true
 
     }
