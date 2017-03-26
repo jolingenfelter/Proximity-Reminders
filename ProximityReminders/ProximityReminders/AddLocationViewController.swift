@@ -32,6 +32,7 @@ class AddLocationViewController: UIViewController {
         
         let items = ["Reminder on arrival", "Reminder on departure"]
         let segmentedControl = UISegmentedControl(items: items)
+        segmentedControl.selectedSegmentIndex = 0
         segmentedControl.addTarget(self, action: #selector(toggleSegmentController(sender:)), for: .valueChanged)
         
         return segmentedControl

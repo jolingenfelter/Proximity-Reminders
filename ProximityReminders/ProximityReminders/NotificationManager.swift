@@ -58,6 +58,10 @@ struct NotificationManager {
         
     }
     
+    func removeNotification(withIdentifier id: String) {
+        notificationCenter.removePendingNotificationRequests(withIdentifiers: [id])
+    }
+    
 }
 
 

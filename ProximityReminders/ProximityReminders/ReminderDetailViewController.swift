@@ -114,6 +114,10 @@ class ReminderDetailViewController: UITableViewController {
                 
             }
             
+            if let reminderType = reminder.type {
+                self.reminderType = ReminderType(rawValue: reminderType)!
+            }
+            
         } else {
         
             locationReminderSwitch.isOn = false
@@ -154,9 +158,7 @@ extension ReminderDetailViewController {
                     guard let location = reminderLocation else {
                         
                         reminder.location = nil
-                        
                         CoreDataStack.sharedInstance.saveContext()
-                        
                         self.dismiss(animated: true, completion: nil)
                         
                         return
@@ -330,6 +332,10 @@ extension ReminderDetailViewController {
             
             if reminderLocation != nil {
                 addLocationViewController.savedLocation = reminderLocation
+            }
+            
+            if reminderType != nil {
+                addLocationViewController.reminderType = reminderType
             }
             
             navigationController?.pushViewController(addLocationViewController, animated: true)
