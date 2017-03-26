@@ -366,6 +366,7 @@ extension ReminderDetailViewController {
         
         reminderLocation = addLocationViewController.savedLocation
         reminderType = addLocationViewController.reminderType
+        print(reminderType?.rawValue)
         
         if let reminderLocation = reminderLocation {
             

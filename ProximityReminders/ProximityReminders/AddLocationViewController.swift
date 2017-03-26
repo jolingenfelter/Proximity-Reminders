@@ -9,9 +9,9 @@
 import UIKit
 import MapKit
 
-enum ReminderType: Int {
-    case Arrival = 1
-    case Departure = 2
+enum ReminderType: String {
+    case Arrival
+    case Departure 
 }
 
 class AddLocationViewController: UIViewController {
@@ -32,7 +32,6 @@ class AddLocationViewController: UIViewController {
         
         let items = ["Reminder on arrival", "Reminder on departure"]
         let segmentedControl = UISegmentedControl(items: items)
-        segmentedControl.selectedSegmentIndex = 0
         segmentedControl.addTarget(self, action: #selector(toggleSegmentController(sender:)), for: .valueChanged)
         
         return segmentedControl
@@ -71,6 +70,8 @@ class AddLocationViewController: UIViewController {
         mapView.showsUserLocation = true
         
         self.definesPresentationContext = true
+        
+        reminderType = .Arrival
         
     }
     
