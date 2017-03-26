@@ -42,10 +42,10 @@ class ReminderCell: UITableViewCell {
         completedButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            completedButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
-            completedButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
+            completedButton.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
+            completedButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
             completedButton.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -10),
-            completedButton.widthAnchor.constraint(equalToConstant: 20)
+            completedButton.widthAnchor.constraint(equalToConstant: 30)
             ])
         
     }
