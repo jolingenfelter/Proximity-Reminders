@@ -56,31 +56,6 @@ class LocationManager: NSObject {
         }
     }
     
-    func parseAddress(location: MKPlacemark) -> String {
-        
-        let firstSpace = (location.subThoroughfare != nil || location.thoroughfare != nil) ? " ":""
-        
-        let comma = (location.subThoroughfare != nil || location.thoroughfare != nil) && (location.subAdministrativeArea != nil || location.administrativeArea != nil) ? ", " : ""
-        
-        let secondSpace = (location.subAdministrativeArea != nil && location.administrativeArea != nil) ? " " : ""
-        
-        let addressString = String(
-            format: "%@%@%@%@%@%@%@",
-            // Address Number
-            location.subThoroughfare ?? "",
-            firstSpace,
-            // Street Name
-            location.thoroughfare ?? "",
-            comma,
-            // City
-            location.locality ?? "",
-            secondSpace,
-            // State,
-            location.administrativeArea ?? "")
-        
-        return addressString
-    }
-    
     func dropPinAndZoom(placemark: MKPlacemark) {
         
         guard let mapView = mapView else {

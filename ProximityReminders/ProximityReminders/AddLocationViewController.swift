@@ -210,7 +210,7 @@ extension AddLocationViewController: UITableViewDelegate, UITableViewDataSource 
         
         let searchLocation = searchLocations[indexPath.row].placemark
         cell.textLabel?.text = searchLocation.name
-        cell.detailTextLabel?.text = locationManager?.parseAddress(location: searchLocation)
+        cell.detailTextLabel?.text = parseAddress(location: searchLocation)
     
         return cell
     }
@@ -225,8 +225,8 @@ extension AddLocationViewController: UITableViewDelegate, UITableViewDataSource 
             
         locationToSave = CLLocation(latitude: locationPlacemark!.coordinate.latitude, longitude: locationPlacemark!.coordinate.longitude)
         
-        searchBar?.text = locationManager?.parseAddress(location: locationPlacemark!)
-        reminderAddress = locationManager?.parseAddress(location: locationPlacemark!)
+        searchBar?.text = parseAddress(location: locationPlacemark!)
+        reminderAddress = parseAddress(location: locationPlacemark!)
         
         searchBar?.resignFirstResponder()
         
@@ -340,9 +340,8 @@ extension AddLocationViewController {
                 return
             }
             
-            if let locationText = locationManager?.parseAddress(location: locationName) {
-                self.presentAlert(withTitle: "Saved", andMessage: "\(locationText) has been added to your reminder")
-            }
+            let locationText = parseAddress(location: locationName)
+            self.presentAlert(withTitle: "Saved", andMessage: "\(locationText) has been added to your reminder")
             
             
         } else {
