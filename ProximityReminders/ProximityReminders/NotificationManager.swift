@@ -35,7 +35,7 @@ struct NotificationManager {
                 
             }
             
-            return UNLocationNotificationTrigger(region: region, repeats: false)
+            return UNLocationNotificationTrigger(region: region, repeats: true)
         }
         
         return nil

@@ -157,7 +157,7 @@ extension ReminderDetailViewController {
                     
                     // No location reminder
                     
-                    guard let location = reminderLocation else {
+                    guard let location = reminderLocation, let reminderType = reminderType else {
                         
                         reminder.location = nil
                         CoreDataStack.sharedInstance.saveContext()
@@ -171,13 +171,11 @@ extension ReminderDetailViewController {
                     let locationToSave = Location.location(withLatitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
                     
                     reminder.location = locationToSave
+                
+                    reminder.type = reminderType.rawValue
+                        
+                    notificationManager.addNotification(toReminder: reminder)
                     
-                    if let reminderType = reminderType {
-                        
-                        reminder.type = reminderType.rawValue
-                        
-                        notificationManager.addNotification(toReminder: reminder)
-                    }
                     
                 } else {
                     
@@ -362,6 +360,7 @@ extension ReminderDetailViewController {
             locationDetailCell.isHidden = true
             
             reminderLocation = nil
+            reminderType = nil
             locationDetailLabel.text = nil
             
         } else {

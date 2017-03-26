@@ -65,8 +65,15 @@ extension RemindersDataSource: UITableViewDataSource {
         let reminder = self.fetchedResultsController.object(at: indexPath) as! Reminder
         
         if editingStyle == .delete {
+            
+            let notificationManager = NotificationManager()
+            if reminder.location != nil {
+                notificationManager.removeNotification(fromRemonder: reminder)
+            }
+            
             CoreDataStack.sharedInstance.managedObjectContext.delete(reminder)
             CoreDataStack.sharedInstance.saveContext()
+            
         }
         
     }
