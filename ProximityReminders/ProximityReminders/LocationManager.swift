@@ -74,7 +74,7 @@ class LocationManager: NSObject {
         mapView.setRegion(region, animated: true)
         
         let location = CLLocation(latitude: placemark.coordinate.latitude, longitude: placemark.coordinate.longitude)
-        mapView.add(MKCircle(center: location.coordinate, radius: 40))
+        mapView.add(MKCircle(center: location.coordinate, radius: 50))
         
     }
     
