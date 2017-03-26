@@ -24,6 +24,7 @@ class AddLocationViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        tableView.isHidden = true
         
         return tableView
     }()
@@ -55,6 +56,7 @@ class AddLocationViewController: UIViewController {
     // Other
     var reminderType: ReminderType?
     var searchBar: UISearchBar?
+    var locationSearch: MKLocalSearch?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -83,28 +85,6 @@ class AddLocationViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         
-        // MapView
-        
-        view.addSubview(mapView)
-        mapView.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            mapView.topAnchor.constraint(equalTo: view.topAnchor),
-            mapView.bottomAnchor.constraint(equalTo: view.centerYAnchor, constant: -50),
-            mapView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            mapView.trailingAnchor.constraint(equalTo: view.trailingAnchor)])
-        
-        // SegmentedControl
-        
-        view.addSubview(notificationTimeOptionButtons)
-        notificationTimeOptionButtons.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            notificationTimeOptionButtons.topAnchor.constraint(equalTo: mapView.bottomAnchor, constant: 5),
-            notificationTimeOptionButtons.heightAnchor.constraint(equalToConstant: 25),
-            notificationTimeOptionButtons.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15),
-            notificationTimeOptionButtons.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15)])
-        
         // SearchBar
         
         guard let searchBar = searchBar else {
@@ -115,10 +95,33 @@ class AddLocationViewController: UIViewController {
         searchBar.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            searchBar.topAnchor.constraint(equalTo: notificationTimeOptionButtons.bottomAnchor, constant: 5),
+            searchBar.topAnchor.constraint(equalTo: view.topAnchor),
             searchBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             searchBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             searchBar.heightAnchor.constraint(equalToConstant: 40)])
+        
+        // SegmentedControl
+        
+        view.addSubview(notificationTimeOptionButtons)
+        notificationTimeOptionButtons.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            notificationTimeOptionButtons.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 10),
+            notificationTimeOptionButtons.heightAnchor.constraint(equalToConstant: 25),
+            notificationTimeOptionButtons.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15),
+            notificationTimeOptionButtons.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15)])
+        
+        // MapView
+        
+        view.addSubview(mapView)
+        mapView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            mapView.topAnchor.constraint(equalTo: notificationTimeOptionButtons.bottomAnchor, constant: 10),
+            mapView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            mapView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            mapView.trailingAnchor.constraint(equalTo: view.trailingAnchor)])
+        
         
         // TableView
         
@@ -136,8 +139,13 @@ class AddLocationViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
+        
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "CheckLocationAdded"), object: nil, userInfo: nil)
         
+        if self.presentedViewController != nil {
+            self.presentedViewController?.dismiss(animated: true, completion: nil)
+        }
+    
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -182,11 +190,13 @@ extension AddLocationViewController: UITableViewDelegate, UITableViewDataSource 
         
         locationName = searchLocations[indexPath.row].placemark
         
-        if let selectedLocation = locationName {
-            locationManager?.dropPinAndZoom(mapView: self.mapView, placemark: selectedLocation)
+        locationManager?.dropPinAndZoom(mapView: self.mapView, placemark: locationName!)
             
-            locationToSave = CLLocation(latitude: selectedLocation.coordinate.latitude, longitude: selectedLocation.coordinate.longitude)
-        }
+        locationToSave = CLLocation(latitude: locationName!.coordinate.latitude, longitude: locationName!.coordinate.longitude)
+        
+        searchBar?.text = locationName?.title
+        searchBar?.resignFirstResponder()
+        tableView.isHidden = true
 
     }
     
@@ -214,12 +224,12 @@ extension AddLocationViewController: UISearchControllerDelegate, UISearchResults
             return
         }
         
-        let request = MKLocalSearchRequest()
-        request.naturalLanguageQuery = searchText
-        request.region = mapView.region
+        let searchRequest = MKLocalSearchRequest()
+        searchRequest.naturalLanguageQuery = searchText
+        searchRequest.region = mapView.region
         
-        let search = MKLocalSearch(request: request)
-        search.start { (response, error) in
+        locationSearch = MKLocalSearch(request: searchRequest)
+        locationSearch!.start { (response, error) in
             
             guard let response = response else {
                 return
@@ -238,11 +248,17 @@ extension AddLocationViewController: UISearchControllerDelegate, UISearchResults
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         searchBar.setShowsCancelButton(true, animated: true)
+        tableView.isHidden = false
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
+        tableView.isHidden = true
         searchBar.setShowsCancelButton(false, animated: true)
+    }
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        tableView.isHidden = true
     }
 }
 
