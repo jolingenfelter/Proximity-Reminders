@@ -329,13 +329,11 @@ extension ReminderDetailViewController {
         switch (indexPath.section, indexPath.row) {
             
         case (1,1):
-            
-            if reminderLocation != nil {
+        
+            if let reminderLocation = reminderLocation, let reminderType = reminderType, let reminderAddress = reminderAddress {
                 addLocationViewController.savedLocation = reminderLocation
-            }
-            
-            if reminderType != nil {
                 addLocationViewController.reminderType = reminderType
+                addLocationViewController.reminderAddress = reminderAddress
             }
             
             navigationController?.pushViewController(addLocationViewController, animated: true)

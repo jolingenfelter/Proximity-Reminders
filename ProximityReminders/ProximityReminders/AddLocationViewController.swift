@@ -72,7 +72,7 @@ class AddLocationViewController: UIViewController {
             
             let placemark = MKPlacemark(coordinate: coordiante)
             
-            searchBar!.text = placemark.name
+            searchBar!.text = reminderAddress
         
             locationManager?.dropPinAndZoom(placemark: placemark)
             
@@ -225,9 +225,11 @@ extension AddLocationViewController: UITableViewDelegate, UITableViewDataSource 
             
         locationToSave = CLLocation(latitude: locationPlacemark!.coordinate.latitude, longitude: locationPlacemark!.coordinate.longitude)
         
-        searchBar?.text = locationPlacemark?.title
+        searchBar?.text = locationManager?.parseAddress(location: locationPlacemark!)
+        reminderAddress = locationManager?.parseAddress(location: locationPlacemark!)
+        
         searchBar?.resignFirstResponder()
-        reminderAddress = locationPlacemark?.title
+        
         tableView.isHidden = true
 
     }

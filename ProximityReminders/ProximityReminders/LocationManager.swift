@@ -60,7 +60,7 @@ class LocationManager: NSObject {
         
         let firstSpace = (location.subThoroughfare != nil || location.thoroughfare != nil) ? " ":""
         
-        let comma = (location.subThoroughfare != nil || location.thoroughfare != nil) && (location.subAdministrativeArea != nil || location.administrativeArea != nil) ? "," : ""
+        let comma = (location.subThoroughfare != nil || location.thoroughfare != nil) && (location.subAdministrativeArea != nil || location.administrativeArea != nil) ? ", " : ""
         
         let secondSpace = (location.subAdministrativeArea != nil && location.administrativeArea != nil) ? " " : ""
         
