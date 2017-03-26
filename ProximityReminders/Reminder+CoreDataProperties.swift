@@ -28,6 +28,7 @@ extension Reminder {
         let reminder = NSEntityDescription.insertNewObject(forEntityName: Reminder.entityName, into: CoreDataStack.sharedInstance.managedObjectContext) as! Reminder
         
         reminder.date = Date()
+        reminder.id = UUID().uuidString
         reminder.text = text
         
         return reminder

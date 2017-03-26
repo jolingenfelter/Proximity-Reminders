@@ -58,6 +58,7 @@ class ReminderDetailViewController: UITableViewController {
     
     let locationDetailCell = UITableViewCell()
     var reminderLocation: CLLocation?
+    var reminderType: ReminderType?
     let locationManager = LocationManager()
     let addLocationViewController = AddLocationViewController()
 
@@ -148,6 +149,8 @@ extension ReminderDetailViewController {
                     
                     reminder.text = reminderText
                     
+                    // No location reminder
+                    
                     guard let location = reminderLocation else {
                         
                         reminder.location = nil
@@ -159,13 +162,24 @@ extension ReminderDetailViewController {
                         return
                     }
                     
+                    // Location reminder
+                    
                     let locationToSave = Location.location(withLatitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
                     
                     reminder.location = locationToSave
                     
+                    if let reminderType = reminderType {
+                        addNotification(toReminder: reminder, reminderType: reminderType)
+                    }
+                    
                 } else {
                     
                     reminder = Reminder.reminder(withText: reminderText, andLocation: reminderLocation)
+                    
+                    if let reminderType = reminderType {
+                        addNotification(toReminder: reminder!, reminderType: reminderType)
+                    }
+                    
                 }
                 
                 CoreDataStack.sharedInstance.saveContext()
@@ -351,8 +365,11 @@ extension ReminderDetailViewController {
     func addLocation() {
         
         reminderLocation = addLocationViewController.savedLocation
+        reminderType = addLocationViewController.reminderType
         
         if let reminderLocation = reminderLocation {
+            
+            // Update Location Label
             
             locationManager.geoCoder.reverseGeocodeLocation(reminderLocation, completionHandler: { (placemarks, error) in
                 
@@ -374,6 +391,15 @@ extension ReminderDetailViewController {
         }
         
     }
+    
+    func addNotification(toReminder reminder: Reminder, reminderType: ReminderType) {
+        
+        let notificationManager = NotificationManager()
+        let eventWithLocation = notificationManager.addLocationEvent(forReminder: reminder, andReminderType: reminderType)
+        notificationManager.scheduleNewNotification(withReminder: reminder, locationTrigger: eventWithLocation)
+        
+    }
+
 }
 
 // MARK: - UITextFieldDelegate

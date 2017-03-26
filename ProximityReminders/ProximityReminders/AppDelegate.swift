@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import UserNotifications
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -37,6 +38,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         navBarAppearance.tintColor = .white
         navBarAppearance.isTranslucent = false
         navBarAppearance.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
+        
+        // Notifications
+        let notificationCenter = UNUserNotificationCenter.current()
+        notificationCenter.requestAuthorization(options: [.alert, .sound]) { (granted, error) in
+        }
         
         return true
     }
