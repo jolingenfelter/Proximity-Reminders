@@ -87,18 +87,23 @@ extension RemindersDataSource {
         
         
         let reminder = fetchedResultsController.object(at: indexPath) as! Reminder
-        //let notificationManager = NotificationManager()
+        let notificationManager = NotificationManager()
         
         if reminder.completed == false {
             
             reminder.completed = true
             
             if reminder.location != nil {
-                
+                notificationManager.addNotification(toReminder: reminder)
             }
             
         } else {
+            
             reminder.completed = false
+            
+            if reminder.location != nil {
+                notificationManager.removeNotification(fromRemonder: reminder)
+            }
         }
         
         CoreDataStack.sharedInstance.saveContext()

@@ -58,11 +58,19 @@ struct NotificationManager {
         
     }
     
+    func addNotification(toReminder reminder: Reminder) {
+        
+        let eventWithLocation = self.addLocationEvent(forReminder: reminder)
+        self.scheduleNewNotification(withReminder: reminder, locationTrigger: eventWithLocation)
+        
+    }
+    
     func removeNotification(fromRemonder reminder: Reminder) {
         
         guard let reminderID = reminder.id else {
             return
         }
+        
         notificationCenter.removePendingNotificationRequests(withIdentifiers: [reminderID])
     }
     

@@ -145,6 +145,8 @@ extension ReminderDetailViewController {
     
     func savePressed() {
         
+        let notificationManager = NotificationManager()
+        
         if reminderTextField.text != "" {
             
             if let reminderText = reminderTextField.text {
@@ -171,15 +173,17 @@ extension ReminderDetailViewController {
                     reminder.location = locationToSave
                     
                     if let reminderType = reminderType {
+                        
                         reminder.type = reminderType.rawValue
-                        addNotification(toReminder: reminder)
+                        
+                        notificationManager.addNotification(toReminder: reminder)
                     }
                     
                 } else {
                     
                     reminder = Reminder.reminder(withText: reminderText, type: reminderType?.rawValue, andLocation: reminderLocation)
                     
-                    addNotification(toReminder: reminder!)
+                    notificationManager.addNotification(toReminder: reminder!)
                     
                     
                 }
@@ -371,9 +375,10 @@ extension ReminderDetailViewController {
     func addLocation() {
         
         reminderLocation = addLocationViewController.savedLocation
-        reminderType = addLocationViewController.reminderType
         
         if let reminderLocation = reminderLocation {
+            
+            reminderType = addLocationViewController.reminderType
             
             // Update Location Label
             
@@ -391,18 +396,11 @@ extension ReminderDetailViewController {
             
         } else {
             
+            reminderType = nil
             locationReminderSwitch.isOn = false
             locationDetailCell.isHidden = true
             
         }
-        
-    }
-    
-    func addNotification(toReminder reminder: Reminder) {
-        
-        let notificationManager = NotificationManager()
-        let eventWithLocation = notificationManager.addLocationEvent(forReminder: reminder)
-        notificationManager.scheduleNewNotification(withReminder: reminder, locationTrigger: eventWithLocation)
         
     }
 
