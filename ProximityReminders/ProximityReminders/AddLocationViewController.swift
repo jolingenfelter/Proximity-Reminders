@@ -230,6 +230,8 @@ extension AddLocationViewController: UITableViewDelegate, UITableViewDataSource 
         searchBar?.resignFirstResponder()
         
         tableView.isHidden = true
+        
+        searchLocations = []
 
     }
     
@@ -287,6 +289,8 @@ extension AddLocationViewController: UISearchControllerDelegate, UISearchResults
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
         tableView.isHidden = true
+        searchLocations = []
+        tableView.reloadData()
         searchBar.setShowsCancelButton(false, animated: true)
     }
     

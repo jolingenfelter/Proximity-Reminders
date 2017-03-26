@@ -101,7 +101,7 @@ extension RemindersDataSource {
             reminder.completed = true
             
             if reminder.location != nil {
-                notificationManager.addNotification(toReminder: reminder)
+                notificationManager.removeNotification(fromRemonder: reminder)
             }
             
         } else {
@@ -109,7 +109,7 @@ extension RemindersDataSource {
             reminder.completed = false
             
             if reminder.location != nil {
-                notificationManager.removeNotification(fromRemonder: reminder)
+                notificationManager.addNotification(toReminder: reminder)
             }
         }
         
