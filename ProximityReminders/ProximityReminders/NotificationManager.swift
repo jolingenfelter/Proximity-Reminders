@@ -23,12 +23,12 @@ class NotificationManager {
             
             let reminderType = ReminderType(rawValue: reminderTypeString)
             
-            if reminderType == .Arrival {
+            if reminderType == .arrival {
                 
                 region.notifyOnEntry = true
                 region.notifyOnExit = false
                 
-            } else if reminderType == .Departure {
+            } else if reminderType == .departure {
                 
                 region.notifyOnEntry = false
                 region.notifyOnExit = true

@@ -11,8 +11,8 @@ import MapKit
 import Contacts
 
 enum ReminderType: String {
-    case Arrival
-    case Departure 
+    case arrival
+    case departure
 }
 
 class AddLocationViewController: UIViewController {
@@ -103,7 +103,7 @@ class AddLocationViewController: UIViewController {
         
         self.definesPresentationContext = true
         
-        reminderType = .Arrival
+        reminderType = .arrival
         
     }
     
@@ -306,10 +306,10 @@ extension AddLocationViewController {
         switch sender.selectedSegmentIndex {
         
         case 0 :
-            self.reminderType = ReminderType.Arrival
+            self.reminderType = ReminderType.arrival
         
         case 1:
-            self.reminderType = ReminderType.Departure
+            self.reminderType = ReminderType.departure
             
         default:
             break
