@@ -91,6 +91,7 @@ extension RemindersViewController: UITableViewDelegate {
         
         let reminder = dataSource.fetchedResultsController.object(at: indexPath) as! Reminder
         let cell = cell as! ReminderCell
+        cell.selectionStyle = .none
         
         let lineView = UIView(frame: CGRect(x: 15, y: cell.contentView.frame.size.height - 1.0, width: cell.contentView.frame.size.width - 20, height: 0.75))
         

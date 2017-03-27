@@ -44,6 +44,10 @@ class RemindersFetchedResultsController: NSFetchedResultsController<NSFetchReque
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.reloadData()
+        
+        if controller.fetchedObjects?.count == 0 {
+            tableView.separatorStyle = .singleLine
+        }
     }
 
 }
