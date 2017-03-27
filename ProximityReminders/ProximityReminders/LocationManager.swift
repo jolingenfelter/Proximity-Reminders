@@ -36,25 +36,6 @@ class LocationManager: NSObject {
         }
     }
     
-    // Get CLLocation from Location
-    
-    func reverseLocation(location: Location, completion: @escaping(_ city: String, _ street: String) -> Void) {
-        
-        let locationToReverse = CLLocation(latitude: location.latitude, longitude: location.longitude)
-        
-        self.geoCoder.reverseGeocodeLocation(locationToReverse) { (placemarks, error) in
-            
-            if let placemark = placemarks?.first {
-                
-                guard let city = placemark.locality, let street = placemark.thoroughfare else {
-                    return
-                }
-                
-                completion(city, street)
-            }
-            
-        }
-    }
     
     func dropPinAndZoom(placemark: MKPlacemark) {
         
@@ -96,17 +77,10 @@ extension LocationManager: CLLocationManagerDelegate {
             return
         }
         
-        func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        geoCoder.reverseGeocodeLocation(location) { placemarks, error in
             
-            guard let location = locations.first else {
-                return
-            }
-            
-            geoCoder.reverseGeocodeLocation(location) { placemarks, error in
-                
-                if let onLocationFix = self.onLocationFix {
-                    onLocationFix(placemarks?.first, error)
-                }
+            if let onLocationFix = self.onLocationFix {
+                onLocationFix(placemarks?.first, error)
             }
         }
 
