@@ -46,7 +46,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         notificationCenter.getPendingNotificationRequests { (requests) in
             for request in requests {
-                print(request.identifier)
+                print(request.content.body)
             }
         }
         

@@ -230,8 +230,6 @@ extension AddLocationViewController: UITableViewDelegate, UITableViewDataSource 
         searchBar?.resignFirstResponder()
         
         tableView.isHidden = true
-        
-        searchLocations = []
 
     }
     
