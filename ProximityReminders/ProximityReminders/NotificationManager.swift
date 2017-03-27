@@ -10,7 +10,7 @@ import Foundation
 import CoreLocation
 import UserNotifications
 
-struct NotificationManager {
+class NotificationManager {
     
     let notificationCenter = UNUserNotificationCenter.current()
     
