@@ -47,6 +47,8 @@ class RemindersFetchedResultsController: NSFetchedResultsController<NSFetchReque
         
         if controller.fetchedObjects?.count == 0 {
             tableView.separatorStyle = .singleLine
+        } else {
+            tableView.separatorStyle = .none
         }
     }
 

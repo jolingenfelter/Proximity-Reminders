@@ -28,16 +28,6 @@ class RemindersViewController: UIViewController {
     
     let instructionsLabel = UILabel()
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-        
-        if self.dataSource.fetchedResultsController.fetchedObjects?.count != 0 {
-            tableView.separatorStyle = .none
-        } else {
-            tableView.separatorStyle = .singleLine
-        }
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationBarSetup()
