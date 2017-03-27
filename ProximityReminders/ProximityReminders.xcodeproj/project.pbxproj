@@ -63,12 +63,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9E5318BC1E89A0E5007A6BDA /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				9EF5810D1E78AD89006E2B76 /* CoreDataStack.swift */,
+				9E5941E51E8735AC00CE33E0 /* NotificationManager.swift */,
+				9E2A46151E7F028A00C545CD /* LocationManager.swift */,
+			);
+			name = Managers;
+			sourceTree = "<group>";
+		};
 		9E6CE3B41E79ED040086F30E /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				9E2A46151E7F028A00C545CD /* LocationManager.swift */,
 				9E9DD73C1E85BF290053C50D /* UIViewControllerExtensions.swift */,
-				9E5941E51E8735AC00CE33E0 /* NotificationManager.swift */,
 				9E996D321E885CB500A2900F /* Utilities.swift */,
 			);
 			name = Helpers;
@@ -97,6 +105,7 @@
 				9EF581101E78B0E7006E2B76 /* Model */,
 				9EF5810F1E78B0CA006E2B76 /* Controllers */,
 				9E90098B1E7B41140086D672 /* View */,
+				9E5318BC1E89A0E5007A6BDA /* Managers */,
 				9E6CE3B41E79ED040086F30E /* Helpers */,
 				9E82A7A71E7752600050EAC5 /* Assets.xcassets */,
 				9E82A7A91E7752600050EAC5 /* LaunchScreen.storyboard */,
@@ -116,7 +125,6 @@
 		9EF5810F1E78B0CA006E2B76 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				9EF5810D1E78AD89006E2B76 /* CoreDataStack.swift */,
 				9E6CE3B51E79ED910086F30E /* RemindersFetchedResultsController.swift */,
 				9E82A7A21E7752600050EAC5 /* RemindersViewController.swift */,
 				9EDF75821E7D67F9002CC3AB /* ReminderDetailViewController.swift */,
