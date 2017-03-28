@@ -10,7 +10,7 @@ import Foundation
 import CoreLocation
 import UserNotifications
 
-class NotificationManager {
+class NotificationManager: NSObject {
     
     let notificationCenter = UNUserNotificationCenter.current()
     
@@ -72,6 +72,28 @@ class NotificationManager {
         }
         
         notificationCenter.removePendingNotificationRequests(withIdentifiers: [reminderID])
+    }
+    
+}
+
+// MARK: - UNUserNotificationCenterDelegate
+
+extension NotificationManager: UNUserNotificationCenterDelegate {
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        
+        let objectIDDescription = response.notification.request.identifier
+        
+        print("Received response to: \(objectIDDescription)")
+        
+        completionHandler()
+        
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        
+        completionHandler([.alert, .sound])
+        
     }
     
 }
