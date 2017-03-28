@@ -333,20 +333,22 @@ extension AddLocationViewController {
     
     func saveLocationPressed() {
         
-        if locationToSave != nil {
+        guard let reminderAddress = reminderAddress else {
+            
+            self.presentAlert(withTitle: "Unable to save", andMessage: "You must select a location in order to save")
+            return
+        }
+        
+        if savedLocation == nil {
             
             savedLocation = locationToSave
             
-            guard let locationName = locationPlacemark else {
-                return
-            }
-            
-            let locationText = parseAddress(location: locationName)
-            self.presentAlert(withTitle: "Saved", andMessage: "\(locationText) has been added to your reminder")
-            
+            self.presentAlert(withTitle: "Saved", andMessage: "\(reminderAddress) has been added to your reminder")
             
         } else {
-            self.presentAlert(withTitle: "Unable to save", andMessage: "You must select a location in order to save")
+            
+            self.presentAlert(withTitle: "Saved", andMessage: "\(reminderAddress) has been added to your reminder")
+            
         }
         
     }
