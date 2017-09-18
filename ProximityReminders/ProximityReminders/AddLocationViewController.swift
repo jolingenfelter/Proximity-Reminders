@@ -285,8 +285,10 @@ extension AddLocationViewController: UISearchControllerDelegate, UISearchResults
             completedSearch = search
             
             guard let completedSearch = completedSearch else {
-                return
+              return
             }
+            
+            reminderAddress = "\(completedSearch.title)"
             
             mapView.searchAndZoomInOn(searchCompletion: completedSearch, completion: { (location) in
                 self.locationToSave = location
@@ -361,7 +363,7 @@ extension AddLocationViewController {
     
     func saveLocationPressed() {
         
-        guard let reminderAddress = reminderAddress else {
+        guard let locationToSave = locationToSave else {
             
             self.presentAlert(withTitle: "Unable to save", andMessage: "You must select a location in order to save")
             return
@@ -369,7 +371,7 @@ extension AddLocationViewController {
         
         savedLocation = locationToSave
             
-        self.presentAlert(withTitle: "Saved", andMessage: "\(reminderAddress) has been added to your reminder")
+        self.presentAlert(withTitle: "Saved", andMessage: "\(reminderAddress!) has been added to your reminder")
         
     }
 }
