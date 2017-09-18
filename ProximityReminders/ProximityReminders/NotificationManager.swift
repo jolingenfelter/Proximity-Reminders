@@ -14,7 +14,7 @@ class NotificationManager: NSObject {
     
     let notificationCenter = UNUserNotificationCenter.current()
     
-    func addLocationEvent(forReminder reminder: Reminder) -> UNLocationNotificationTrigger? {
+    private func addLocationEvent(forReminder reminder: Reminder) -> UNLocationNotificationTrigger? {
         
         if let location = reminder.location, let reminderID = reminder.id, let reminderTypeString = reminder.type {
             
@@ -42,7 +42,7 @@ class NotificationManager: NSObject {
         
     }
     
-    func scheduleNewNotification(withReminder reminder: Reminder, locationTrigger trigger: UNLocationNotificationTrigger?) {
+    private func scheduleNewNotification(withReminder reminder: Reminder, locationTrigger trigger: UNLocationNotificationTrigger?) {
         
         if let reminderText = reminder.text, let reminderID = reminder.id, let notificationTrigger = trigger {
             

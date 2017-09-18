@@ -353,19 +353,3 @@ extension AddLocationViewController {
         
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

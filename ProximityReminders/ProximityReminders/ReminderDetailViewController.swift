@@ -426,20 +426,3 @@ extension ReminderDetailViewController: UIGestureRecognizerDelegate {
     }
     
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

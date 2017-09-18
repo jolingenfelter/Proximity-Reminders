@@ -93,18 +93,3 @@ extension LocationManager: CLLocationManagerDelegate {
     }
     
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
