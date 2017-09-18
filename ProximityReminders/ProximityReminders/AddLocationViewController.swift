@@ -47,12 +47,20 @@ class AddLocationViewController: UIViewController {
     
     // Location Variables
     
-    var searchLocations: [MKMapItem] = []
+    var searchLocations: [MKLocalSearchCompletion] = []
     let mapView = MKMapView()
     var locationToSave: CLLocation?
     var savedLocation: CLLocation?
     var locationManager: LocationManager?
-    var locationPlacemark: MKPlacemark?
+    var completedSearch: MKLocalSearchCompletion?
+    
+    lazy var searchCompleter: MKLocalSearchCompleter = {
+        
+        let completer = MKLocalSearchCompleter()
+        completer.delegate = self
+        
+        return completer
+    }()
     
     // Other
     var reminderType: ReminderType?
@@ -182,7 +190,7 @@ class AddLocationViewController: UIViewController {
         
         locationToSave = nil
         savedLocation = nil
-        locationPlacemark = nil
+        completedSearch = nil
         reminderType = nil
         reminderAddress = nil
         
@@ -207,9 +215,9 @@ extension AddLocationViewController: UITableViewDelegate, UITableViewDataSource 
         
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "Cell")
         
-        let searchLocation = searchLocations[indexPath.row].placemark
-        cell.textLabel?.text = searchLocation.name
-        cell.detailTextLabel?.text = parseAddress(location: searchLocation)
+        let location = searchLocations[indexPath.row]
+        cell.textLabel?.text = location.title
+        cell.detailTextLabel?.text = location.subtitle
     
         return cell
     }
@@ -217,19 +225,20 @@ extension AddLocationViewController: UITableViewDelegate, UITableViewDataSource 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         searchController.searchBar.endEditing(true)
-        
-        locationPlacemark = searchLocations[indexPath.row].placemark
-        
-        mapView.dropPinAndZoom(placemark: locationPlacemark!)
-            
-        locationToSave = CLLocation(latitude: locationPlacemark!.coordinate.latitude, longitude: locationPlacemark!.coordinate.longitude)
-        
-        searchBar?.text = parseAddress(location: locationPlacemark!)
-        reminderAddress = parseAddress(location: locationPlacemark!)
-        
-        searchBar?.resignFirstResponder()
-        
         tableView.isHidden = true
+        
+        completedSearch = searchLocations[indexPath.row]
+        
+        guard let completedSearch = completedSearch else {
+            return
+        }
+        
+        searchController.searchBar.text = completedSearch.title
+        reminderAddress = "\(completedSearch.title)"
+        
+        mapView.searchAndZoomInOn(searchCompletion: completedSearch, completion: { (location) in
+            self.locationToSave = location
+        })
 
     }
     
@@ -257,26 +266,34 @@ extension AddLocationViewController: UISearchControllerDelegate, UISearchResults
             return
         }
         
-        let searchRequest = MKLocalSearchRequest()
-        searchRequest.naturalLanguageQuery = searchText
-        searchRequest.region = mapView.region
-        
-        let search = MKLocalSearch(request: searchRequest)
-        search.start { (response, error) in
-            
-            guard let response = response else {
-                return
-            }
-            
-            self.searchLocations = response.mapItems
-            self.tableView.reloadData()
-        }
+        searchCompleter.queryFragment = searchText
         
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
         searchBar.setShowsCancelButton(false, animated: true)
+        
+        if searchBar.text != nil {
+            
+            searchBar.text = searchLocations.first?.title
+            
+            guard let search = searchLocations.first else {
+                return
+            }
+            
+            completedSearch = search
+            
+            guard let completedSearch = completedSearch else {
+                return
+            }
+            
+            mapView.searchAndZoomInOn(searchCompletion: completedSearch, completion: { (location) in
+                self.locationToSave = location
+            })
+            
+        }
+        
     }
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
@@ -295,6 +312,17 @@ extension AddLocationViewController: UISearchControllerDelegate, UISearchResults
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         tableView.isHidden = true
     }
+}
+
+// MARK: - SearchCompleterDelegate
+
+extension AddLocationViewController: MKLocalSearchCompleterDelegate {
+    
+    func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
+        self.searchLocations = completer.results
+        tableView.reloadData()
+    }
+    
 }
 
 // MARK: - SegmentedControll
@@ -339,17 +367,9 @@ extension AddLocationViewController {
             return
         }
         
-        if savedLocation == nil {
+        savedLocation = locationToSave
             
-            savedLocation = locationToSave
-            
-            self.presentAlert(withTitle: "Saved", andMessage: "\(reminderAddress) has been added to your reminder")
-            
-        } else {
-            
-            self.presentAlert(withTitle: "Saved", andMessage: "\(reminderAddress) has been added to your reminder")
-            
-        }
+        self.presentAlert(withTitle: "Saved", andMessage: "\(reminderAddress) has been added to your reminder")
         
     }
 }

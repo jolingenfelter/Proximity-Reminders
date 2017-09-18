@@ -44,12 +44,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         notificationCenter.requestAuthorization(options: [.alert, .sound]) { (granted, error) in
         }
         
-        notificationCenter.getPendingNotificationRequests { (requests) in
-            for request in requests {
-                print(request.content.body)
-            }
-        }
-        
         return true
     }
 

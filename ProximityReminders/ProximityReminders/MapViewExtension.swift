@@ -28,6 +28,32 @@ extension MKMapView {
         self.add(MKCircle(center: location.coordinate, radius: 50))
         
     }
-
     
+    func searchAndZoomInOn(searchCompletion: MKLocalSearchCompletion, completion: @escaping (CLLocation) -> Void) {
+        
+        let searchRequest = MKLocalSearchRequest(completion: searchCompletion)
+        let search = MKLocalSearch(request: searchRequest)
+        
+        search.start { (response, error) in
+            
+            guard let response = response, let mapItem = response.mapItems.first else {
+                return
+            }
+            
+            let placemark = mapItem.placemark
+            
+            guard let location = placemark.location else {
+                return
+            }
+            
+            completion(location)
+            
+            DispatchQueue.main.async {
+                self.dropPinAndZoom(placemark: placemark)
+            }
+            
+        }
+        
+    }
+
 }
