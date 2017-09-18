@@ -52,7 +52,6 @@ class AddLocationViewController: UIViewController {
     var locationToSave: CLLocation?
     var savedLocation: CLLocation?
     var locationManager: LocationManager?
-    var completedSearch: MKLocalSearchCompletion?
     
     lazy var searchCompleter: MKLocalSearchCompleter = {
         
@@ -190,7 +189,6 @@ class AddLocationViewController: UIViewController {
         
         locationToSave = nil
         savedLocation = nil
-        completedSearch = nil
         reminderType = nil
         reminderAddress = nil
         
@@ -227,11 +225,7 @@ extension AddLocationViewController: UITableViewDelegate, UITableViewDataSource 
         searchController.searchBar.endEditing(true)
         tableView.isHidden = true
         
-        completedSearch = searchLocations[indexPath.row]
-        
-        guard let completedSearch = completedSearch else {
-            return
-        }
+        let completedSearch = searchLocations[indexPath.row]
         
         searchController.searchBar.text = completedSearch.title
         reminderAddress = "\(completedSearch.title)"
@@ -282,15 +276,9 @@ extension AddLocationViewController: UISearchControllerDelegate, UISearchResults
                 return
             }
             
-            completedSearch = search
+            reminderAddress = "\(search.title)"
             
-            guard let completedSearch = completedSearch else {
-              return
-            }
-            
-            reminderAddress = "\(completedSearch.title)"
-            
-            mapView.searchAndZoomInOn(searchCompletion: completedSearch, completion: { (location) in
+            mapView.searchAndZoomInOn(searchCompletion: search, completion: { (location) in
                 self.locationToSave = location
             })
             
