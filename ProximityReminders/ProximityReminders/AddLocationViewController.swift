@@ -62,7 +62,7 @@ class AddLocationViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
-        locationManager = LocationManager(mapView: mapView)
+        locationManager = LocationManager()
         configureSearchController()
         
         if let savedLocation = savedLocation {
@@ -73,7 +73,7 @@ class AddLocationViewController: UIViewController {
             
             searchBar!.text = reminderAddress
         
-            locationManager?.dropPinAndZoom(placemark: placemark)
+            mapView.dropPinAndZoom(placemark: placemark)
             
         } else {
             
@@ -220,7 +220,7 @@ extension AddLocationViewController: UITableViewDelegate, UITableViewDataSource 
         
         locationPlacemark = searchLocations[indexPath.row].placemark
         
-        locationManager?.dropPinAndZoom(placemark: locationPlacemark!)
+        mapView.dropPinAndZoom(placemark: locationPlacemark!)
             
         locationToSave = CLLocation(latitude: locationPlacemark!.coordinate.latitude, longitude: locationPlacemark!.coordinate.longitude)
         

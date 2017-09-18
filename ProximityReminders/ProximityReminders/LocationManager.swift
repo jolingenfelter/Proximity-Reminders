@@ -15,11 +15,8 @@ class LocationManager: NSObject {
     let manager = CLLocationManager()
     let geoCoder = CLGeocoder()
     var onLocationFix: ((CLPlacemark?, Error?) -> Void)?
-    var mapView: MKMapView?
     
-    init (mapView: MKMapView?) {
-        
-        self.mapView = mapView
+    override init () {
         
         super.init()
         
@@ -34,29 +31,6 @@ class LocationManager: NSObject {
         if CLLocationManager.authorizationStatus() == .notDetermined {
             manager.requestAlwaysAuthorization()
         }
-    }
-    
-    
-    func dropPinAndZoom(placemark: MKPlacemark) {
-        
-        guard let mapView = mapView else {
-            return
-        }
-        
-        mapView.removeAnnotations(mapView.annotations)
-        mapView.removeOverlays(mapView.overlays)
-        
-        let annotation = MKPointAnnotation()
-        annotation.coordinate = placemark.coordinate
-        mapView.addAnnotation(annotation)
-        
-        let span = MKCoordinateSpanMake(0.005, 0.005)
-        let region = MKCoordinateRegionMake(placemark.coordinate, span)
-        mapView.setRegion(region, animated: true)
-        
-        let location = CLLocation(latitude: placemark.coordinate.latitude, longitude: placemark.coordinate.longitude)
-        mapView.add(MKCircle(center: location.coordinate, radius: 50))
-        
     }
     
 }
