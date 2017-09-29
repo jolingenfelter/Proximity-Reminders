@@ -34,10 +34,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // NavigationBar Appearance
         let navBarAppearance = UINavigationBar.appearance()
-        navBarAppearance.barTintColor = UIColor(colorLiteralRed: 81/255, green: 172/255, blue: 166/255, alpha: 1)
+        navBarAppearance.barTintColor = UIColor(red: 81/255, green: 172/255, blue: 166/255, alpha: 1)
         navBarAppearance.tintColor = .white
         navBarAppearance.isTranslucent = false
-        navBarAppearance.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
+        navBarAppearance.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
         
         // Notifications
         let notificationCenter = UNUserNotificationCenter.current()

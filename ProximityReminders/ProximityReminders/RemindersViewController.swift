@@ -94,7 +94,7 @@ extension RemindersViewController: UITableViewDelegate {
             
             if let reminder = reminder.text {
                 let attributedText = NSMutableAttributedString(string: reminder)
-                attributedText.addAttribute(NSStrikethroughStyleAttributeName, value: 2, range: NSRange(location: 0, length: attributedText.length))
+                attributedText.addAttribute(NSAttributedStringKey.strikethroughStyle, value: 2, range: NSRange(location: 0, length: attributedText.length))
                 cell.reminderTextLabel.attributedText = attributedText
             }
             
@@ -123,7 +123,7 @@ extension RemindersViewController {
         
     }
     
-    func newReminderPressed() {
+    @objc func newReminderPressed() {
         
         let reminderDetailViewController = ReminderDetailViewController(style: .grouped)
         let navigationController = UINavigationController(rootViewController: reminderDetailViewController)

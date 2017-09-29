@@ -84,7 +84,7 @@ extension RemindersDataSource: UITableViewDataSource {
 
 extension RemindersDataSource {
     
-    func toggleCompletedButton(sender: UIButton) {
+    @objc func toggleCompletedButton(sender: UIButton) {
         
         let buttonPosition = sender.convert(CGPoint.zero, to: self.tableView)
         

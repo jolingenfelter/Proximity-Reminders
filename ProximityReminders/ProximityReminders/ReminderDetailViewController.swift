@@ -141,7 +141,7 @@ extension ReminderDetailViewController {
         
     }
     
-    func savePressed() {
+    @objc func savePressed() {
         
         let notificationManager = NotificationManager()
         
@@ -199,7 +199,7 @@ extension ReminderDetailViewController {
         
     }
     
-    func cancelPressed() {
+    @objc func cancelPressed() {
         self.dismiss(animated: true) { 
             self.reminderLocation = nil
         }
@@ -351,7 +351,7 @@ extension ReminderDetailViewController {
 
 extension ReminderDetailViewController {
     
-    func toggleLocationSwitch(sender: UISwitch) {
+    @objc func toggleLocationSwitch(sender: UISwitch) {
         
         if sender.isOn {
             sender.setOn(false, animated: true)
@@ -369,7 +369,7 @@ extension ReminderDetailViewController {
         
     }
     
-    func addLocation() {
+    @objc func addLocation() {
         
         reminderLocation = addLocationViewController.savedLocation
         
@@ -407,7 +407,7 @@ extension ReminderDetailViewController: UITextFieldDelegate {
 
 extension ReminderDetailViewController: UIGestureRecognizerDelegate {
     
-    func tap(gesture: UITapGestureRecognizer) {
+    @objc func tap(gesture: UITapGestureRecognizer) {
         reminderTextField.resignFirstResponder()
         
     }

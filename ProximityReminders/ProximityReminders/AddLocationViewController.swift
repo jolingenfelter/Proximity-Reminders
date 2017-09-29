@@ -319,7 +319,7 @@ extension AddLocationViewController: MKLocalSearchCompleterDelegate {
 
 extension AddLocationViewController {
     
-    func toggleSegmentController(sender: UISegmentedControl) {
+    @objc func toggleSegmentController(sender: UISegmentedControl) {
         
         switch sender.selectedSegmentIndex {
         
@@ -349,7 +349,7 @@ extension AddLocationViewController {
         
     }
     
-    func saveLocationPressed() {
+    @objc func saveLocationPressed() {
         
         guard let locationToSave = locationToSave else {
             
